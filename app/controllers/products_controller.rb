@@ -1,6 +1,13 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  def search
+    if params[:search].present?
+      @products=Product.where(name: params[:search])
+    else
+      redirect_to root_path
 
+    end
+  end
   # GET /products or /products.json
   def index
     @products = Product.all
@@ -8,6 +15,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1 or /products/1.json
   def show
+    @reviews=Review.where(product_id: @product.id).order("created_at DESC")
   end
 
   # GET /products/new

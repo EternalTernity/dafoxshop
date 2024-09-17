@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   end
   resources :products do
     resources :reviews, except: [ :index ]
+    collection do
+      get "search"
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

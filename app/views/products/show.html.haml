@@ -17,4 +17,8 @@
       .flex.-mx-2.mb-4
         .px-2{class:"w-1/2"}
           = button_to "Add to cart", add_to_cart_cart_path(product_id: @product.id), method: :post, class:"btn-cta rounded-xl"  
-         
+          =link_to "Write a review",new_product_review_path(@product)
+-@reviews.each do |r|
+  =r.user_id
+  =r.subject
+  =r.content
