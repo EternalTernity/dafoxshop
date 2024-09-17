@@ -21,8 +21,9 @@
       %h2.text-lg.font-bold.text-gray-800
         =product.name  
       .mt-2.flex.items-center
-        %span.text-2xl.font-bold.text-sky-500
+        %span.text-xl.font-bold.text-sky-500
           =number_to_currency(product.price, unit: "PHP ") 
+          =link_to "Add to cart", product_path(product.id)
 %footer{:class => "bg-[#06032C]"}
   .mx-auto.w-full.max-w-screen-2xl.p-4.py-6.lg:py-8
     .md:flex.md:justify-between

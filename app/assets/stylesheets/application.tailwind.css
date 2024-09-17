@@ -38,7 +38,11 @@ body{
     }
 
     .btn-cta {
-        @apply bg-[linear-gradient(180deg,#00EFFE,#0095FF)] w-full text-white min-w-[140px] text-base font-black px-5 py-[13px] border-0 hover:bg-sky-800;
-      }
+        @apply bg-[linear-gradient(180deg,#00EFFE,#0095FF)] w-full text-white min-w-[140px] text-base font-black px-5 py-[13px] border-0 hover:bg-sky-800 rounded-lg;
+    }
+
+    .thumbnail-wrapper {
+        @apply shadow-[0_2px_20px_#cccccc7a] leading-[130px] text-center bg-[#ECF1F3] mb-5 rounded-[15px] border-4 border-solid border-white;
+    }
 }
 
