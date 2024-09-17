@@ -1,0 +1,16 @@
+.flex.flex-col.items-center
+  %h1.font-bold.text-2xl.uppercase Log in
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .field.flex.flex-col.pb-3
+      = f.label :email
+      = f.email_field :email, autofocus: true, autocomplete: "email",class:"rounded-2xl"
+    .field.flex.flex-col
+      = f.label :password
+      = f.password_field :password, autocomplete: "current-password",class:"rounded-2xl"
+    - if devise_mapping.rememberable?
+      .field.flex.items-center.pt-3
+        = f.check_box :remember_me,class:"mr-[0.5rem]"
+        = f.label :remember_me
+    .actions
+      = f.submit "Log in"
+    = render "devise/shared/links"

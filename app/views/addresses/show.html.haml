@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b City:
+  = @address.city
+%p
+  %b Province:
+  = @address.province
+%p
+  %b Barangay:
+  = @address.barangay
+%p
+  %b Zip code:
+  = @address.zip_code
+%p
+  %b Street:
+  = @address.street
+%p
+  %b House number:
+  = @address.house_number
+%p
+  %b User:
+  = @address.user
+
+= link_to 'Edit', edit_address_path(@address)
+\|
+= link_to 'Back', addresses_path

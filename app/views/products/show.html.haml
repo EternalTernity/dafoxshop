@@ -1,0 +1,20 @@
+.max-w-6xl.mx-auto.px-4.sm:px-6.lg:px-8.py-8
+  .flex.flex-col.md:flex-row.-mx-4
+    .md:flex-1.px-4
+      .product-wrapper
+        -if @product.product_image.attached?
+          = image_tag(@product.image_webp, class: "w-full h-full object-cover")
+      
+
+    .md:flex-1.px-4
+      .text-4xl.font-bold.text-gray-800.mb-2
+        = @product.name
+      .text-sky-500.text-lg.mb-4.font-bold.leading-8
+        =number_to_currency(@product.price, :unit=>"PHP ")
+      .text-gray-600.text-sm.mt-2
+        =@product.description 
+      %hr.h-px.my-8.bg-gray-200.border-0.dark:bg-gray-700/
+      .flex.-mx-2.mb-4
+        .px-2{class:"w-1/2"}
+          = button_to "Add to cart", add_to_cart_cart_path(product_id: @product.id), method: :post, class:"btn-cta rounded-xl"  
+         

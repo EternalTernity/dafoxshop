@@ -1,0 +1,25 @@
+.flex.flex-col.items-center
+  %h1.text-2xl.font-bold.uppercase sign up
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = render "devise/shared/error_messages", resource: resource
+    .field.flex.flex-col.pb-3
+      = f.label :first_name
+      = f.text_field :first_name, autofocus: true,placeholder: "First Name",class:"rounded-2xl"
+    .field.flex.flex-col.pb-3
+      = f.label :last_name
+      = f.text_field :last_name, autofocus: true,placeholder:"Last Name",class:"rounded-2xl"
+    .field.flex.flex-col.pb-3
+      = f.label :email
+      = f.email_field :email, autofocus: true, autocomplete: "email",placeholder:"E-mail Address" ,class:"rounded-2xl"
+    .field.flex.flex-col.pb-3
+      = f.label :password
+      - if @minimum_password_length
+        %em
+          (#{@minimum_password_length} characters minimum)
+      = f.password_field :password, autocomplete: "new-password",class:"rounded-2xl"
+    .field.flex.flex-col.pb-3
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, autocomplete: "new-password",class:"rounded-2xl"
+    .actions
+      = f.submit "Sign up"
+    = render "devise/shared/links"

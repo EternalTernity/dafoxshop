@@ -1,0 +1,26 @@
+{
+  "name": "dafoxshop",
+  "version": "1.0.0",
+  "description": "application up and running.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EternalTernity/DafoxShop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EternalTernity/DafoxShop/issues"
+  },
+  "homepage": "https://github.com/EternalTernity/DafoxShop#readme",
+  "dependencies": {
+    "flowbite": "^2.5.1"
+  }
+}

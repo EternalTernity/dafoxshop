@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'nexaextra_light';
+    src: url('nexa-extralight-webfont.woff2') format('woff2'),
+    url('nexa-extralight-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'nexa-trialbold';
+    src: url('assets/nexa-trial-bold-webfont.woff2') format('woff2'),
+    url('nexa-trial-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'nexa-trialregular';
+    src: url('nexa-trial-regular-webfont.woff2') format('woff2'),
+    url('nexa-trial-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: nexa-trialbold;
+}
+
+@layer components {
+    .card-wrapper {
+        @apply w-full shadow-[0_2px_10px_#ccc] bg-[#ECF1F3] mb-5 p-[30px] rounded-[20px] border-[5px] border-solid border-white;
+    }
+
+    .product-wrapper{
+        @apply bg-[#ECF1F3] shadow-[0_2px_20px_#cccccc7a] min-h-[570px] content-center rounded-[15px] border-4 border-solid border-white;
+    }
+
+    .btn-cta {
+        @apply bg-[linear-gradient(180deg,#00EFFE,#0095FF)] w-full text-white min-w-[140px] text-base font-black px-5 py-[13px] border-0 hover:bg-sky-800;
+      }
+}
+

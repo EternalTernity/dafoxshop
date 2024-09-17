@@ -1,0 +1,4 @@
+%section.py-4.antialiased
+    %h2.text-xl.font-semibold.text-gray-900.sm:text-2xl.text-center Shopping Cart
+%p#notice.py-2.px-3.bg-green-50.mb-5.text-green-500.font-medium.rounded-lg.inline-block= notice
+=render "cart_items", locals:{@cart_items=>@cart.cart_items}
