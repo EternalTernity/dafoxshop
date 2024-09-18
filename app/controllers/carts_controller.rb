@@ -20,6 +20,7 @@ class CartsController < ApplicationController
     if @product
       @cart=current_user.cart||current_user.build_cart
       cart_item=@cart.cart_items.find_or_initialize_by(product: @product)
+      cart_item.quantity += params[:quantity].to_i unless cart_item.quantity.nil?
       cart_item.assign_attributes(price: @product.price)
       cart_item.save!
     end
@@ -40,7 +41,7 @@ class CartsController < ApplicationController
         redirect_to cart_path(current_user.cart), notice: "You have removed a product from cart."
       end
     else
-      redirect_to @cart, notice: "It's an error while removing a cart, try again."
+      redirect_to @cart
     end
   end
 
@@ -62,6 +63,7 @@ class CartsController < ApplicationController
     @cart=current_user.cart
     @product=Product.find_by(id: params[:product_id])
     @cart_item=@cart.cart_items.find_or_initialize_by(product: @product)
+
     new_quantity=@cart_item.quantity.to_i + 1
 
     if @cart_item.update(quantity: new_quantity)

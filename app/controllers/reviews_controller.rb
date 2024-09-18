@@ -69,11 +69,11 @@ class ReviewsController < ApplicationController
     end
 
     def set_product
-      @product=Product.find(params[:product_id])
+      @product=Product.friendly.find(params[:product_id])
     end
 
     # Only allow a list of trusted parameters through.
     def review_params
-      params.require(:review).permit(:star_rating, :subject, :content, :product_id, :user_id)
+      params.require(:review).permit(:star_rating, :subject, :content)
     end
 end

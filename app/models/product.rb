@@ -8,7 +8,14 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than_or_equal_to: 0 }
   has_many :reviews
 
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   def image_webp
     product_image.variant(format: "webp")
+  end
+
+  def to_param
+    slug
   end
 end

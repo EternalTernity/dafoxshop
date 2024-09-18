@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = Product.new
+    @review=Review.new
   end
 
   # GET /products/1/edit
@@ -68,7 +68,7 @@ class ProductsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_product
-    @product = Product.find(params[:id])
+    @product = Product.friendly.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

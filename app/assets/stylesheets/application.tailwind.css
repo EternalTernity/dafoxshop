@@ -38,7 +38,7 @@ body{
     }
 
     .btn-cta {
-        @apply bg-[linear-gradient(180deg,#00EFFE,#0095FF)] w-full text-white min-w-[140px] text-base font-black px-5 py-[13px] border-0 hover:bg-sky-800 rounded-lg;
+        @apply w-full bg-[linear-gradient(180deg,#00EFFE,#0095FF)] w-full text-white min-w-[140px] text-base font-black px-5 py-[13px] border-0 hover:bg-sky-800 rounded-lg;
     }
 
     .thumbnail-wrapper {

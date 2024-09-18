@@ -30,7 +30,48 @@
         .text-xl.font-semibold.mb-2
           =@product.description
       .mt-8
-        =link_to "Add to cart", add_to_cart_cart_path(product_id: @product.id), class: "btn-cta"  
-  .grid.md:grid-cols-2.gap-8
+        =form_with url: add_to_cart_cart_path(product_id: @product.id), method: :post do
+          =hidden_field_tag :product_id, @product.id
+          =label_tag "Quantity"
+          =number_field_tag :quantity, 1, min: 1
+          =submit_tag "Add to cart" 
+  .grid.md:grid-cols-2.gap-8.p-5
     %div
       %h2.text-2xl.font-bold.mb-4 Write a review
+      .bg-white.p-6.rounded-lg.shadow.border
+        .flex.justify-center.items-center
+          =form_with(model: [@product, Review.new], local:true) do |f|
+            .flex.flex-col.items-center.space-y-5
+              .flex.items-center.space-x-3
+                =f.label :subject
+                =f.text_field :subject, class: "border-2 border-sky-500"
+              .flex.items-center.space-x-3
+                =f.label :content
+                =f.text_area :content
+              .flex.items-center.space-x-3
+                =f.label :star_rating
+                =f.number_field :star_rating, value: 0, min: 0
+
+              =f.submit "Submit", class: "btn-cta"
+    %div
+      .flex.justify-between.items-center.mb-4
+        .text-2xl.font-bold 
+          =pluralize(@product.reviews.count, "Review")
+      .space-y-6
+        -@product.reviews.each do |r|
+          .border-b.pb-6
+            .flex.items-center.mb-2
+              %div
+                %h3.font-bold
+                  =r.user.first_name  
+                %p.text-sm.text-gray-600
+                  =r.subject
+            .flex.mb-2    
+              =r.star_rating
+            %p.text-gray-700.mb-2
+              =r.content
+            .flex.items-center.text-sm.text-gray-500  
+              =time_ago_in_words(r.created_at)
+              
+          
+    
