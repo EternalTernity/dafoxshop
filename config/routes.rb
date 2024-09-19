@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get "carts", to: "carts#show"
   resources :carts do
     member do
-      get "/new_cart", to: "carts#new", as: "new_cart"
       match "/add_to_cart/:product_id", action: :add_to_cart, via: [ :get, :post ], as: "add_to_cart"
       match "/remove_from_cart/:product_id", action: :remove_from_cart, via: [ :get, :delete ], as: "remove_from_cart"
 
@@ -17,7 +16,9 @@ Rails.application.routes.draw do
     end
   end
   resources :products do
-    resources :reviews, except: [ :index ]
+    resources :reviews, only: [ :create] do
+      resources :likes, only: [:create, :destroy]
+    end
     collection do
       get "search"
     end
@@ -39,5 +40,10 @@ Rails.application.routes.draw do
   namespace :admin do
     get "/" => "home#index"
     resources :products
+    resources :reviews do
+      member do
+        patch :is_published
+      end
+    end
   end
 end

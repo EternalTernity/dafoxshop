@@ -1,5 +1,6 @@
 class Admin::ProductsController < AdminController
   before_action :set_admin_product, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: [ :new ]
 
   # GET /admin/products or /admin/products.json
   def index
@@ -8,7 +9,7 @@ class Admin::ProductsController < AdminController
 
   # GET /admin/products/1 or /admin/products/1.json
   def show
-    @admin_product = Product.find(params[:id])
+    @admin_product = Product.friendly.find(params[:id])
   end
 
   # GET /admin/products/new
@@ -63,11 +64,11 @@ class Admin::ProductsController < AdminController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_admin_product
-    @admin_product = Product.find(params[:id])
+    @admin_product = Product.friendly.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def admin_product_params
-    params.require(:product).permit(:name, :description, :price, :product_image)
+    params.require(:product).permit(:name, :description, :price, :product_image, product_variants: [])
   end
 end

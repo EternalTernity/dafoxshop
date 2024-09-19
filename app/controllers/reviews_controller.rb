@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
 
   # GET /reviews or /reviews.json
   def index
-    @reviews = Review.all
+    @reviews = Review.where(is_published: true)
   end
 
   # GET /reviews/1 or /reviews/1.json
@@ -36,6 +36,7 @@ class ReviewsController < ApplicationController
     @review=Review.create(review_params)
     @review.user_id=current_user.id
     @review.product_id=@product.id
+    @review.is_published=false
     redirect_to @product if @review.save
   end
 

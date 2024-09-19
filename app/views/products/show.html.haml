@@ -3,10 +3,8 @@
     %div{class:"md:w-1/2"}
       .flex.gap-4
         %div{class:"w-1/5"}
-          -[1,2,3].each do |_p|
-            .thumbnail-wrapper
-              -if @product.product_image.attached?
-                = image_tag(@product.image_webp, class: "w-full h-full object-cover")
+          -@product.product_variants.each_with_index do |var|
+            =image_tag var.variant(resize_to_limit: [500,500])
         %div{class:"w-4/5"}
           .product-wrapper
             -if @product.product_image.attached?
@@ -17,12 +15,15 @@
           =@product.name
       .flex.items-center.mt-2
         %span.ml-2.text-sm.text-gray-600
-          -if @product.reviews.count >= 0
+          -if @product.reviews.count > 0
             %span.ml-2.text-sm.text-gray-600
-              =@product.reviews.count
+              .star-rating{style: "--rating: #{@product.average_rating}; --total-stars: 5;"}
+                .stars-outer
+                  .stars-inner
+              =pluralize(@product.reviews.is_published.count, "Review")
+              
           -else
-            %span.ml-2.text-sm.text-gray-600
-              =0    
+            %span.ml-2.text-sm.text-gray-600 No review    
       .mt-4
         .text-3xl.font-bold.text-cyan-500
           =number_to_currency(@product.price, unit: "PHP ") 
@@ -34,13 +35,13 @@
           =hidden_field_tag :product_id, @product.id
           =label_tag "Quantity"
           =number_field_tag :quantity, 1, min: 1
-          =submit_tag "Add to cart" 
+          =submit_tag "Add to cart", class: "btn-cta" 
   .grid.md:grid-cols-2.gap-8.p-5
     %div
       %h2.text-2xl.font-bold.mb-4 Write a review
       .bg-white.p-6.rounded-lg.shadow.border
         .flex.justify-center.items-center
-          =form_with(model: [@product, Review.new], local:true) do |f|
+          =form_with(model: [@product, @product.reviews.build], local:true) do |f|
             .flex.flex-col.items-center.space-y-5
               .flex.items-center.space-x-3
                 =f.label :subject
@@ -50,28 +51,32 @@
                 =f.text_area :content
               .flex.items-center.space-x-3
                 =f.label :star_rating
-                =f.number_field :star_rating, value: 0, min: 0
+                =f.select :star_rating, options_for_select(1..5), {}
 
               =f.submit "Submit", class: "btn-cta"
     %div
       .flex.justify-between.items-center.mb-4
         .text-2xl.font-bold 
-          =pluralize(@product.reviews.count, "Review")
+          =pluralize(@product.reviews.is_published.count, "Review")
       .space-y-6
-        -@product.reviews.each do |r|
-          .border-b.pb-6
-            .flex.items-center.mb-2
-              %div
-                %h3.font-bold
-                  =r.user.first_name  
-                %p.text-sm.text-gray-600
-                  =r.subject
-            .flex.mb-2    
-              =r.star_rating
-            %p.text-gray-700.mb-2
-              =r.content
-            .flex.items-center.text-sm.text-gray-500  
-              =time_ago_in_words(r.created_at)
-              
-          
-    
+        -if @reviews.is_published.any?
+          -@reviews.is_published.each do |r|
+            .border-b.pb-6
+              .flex.items-center.mb-2
+                %div
+                  %h3.font-bold
+                    =r.user.first_name  
+                  %p.text-sm.text-gray-600
+                    =r.subject
+              .flex.mb-2    
+                -r.star_rating.times do
+                  =icon('fa-solid', 'star', class: "text-[#ffc107]")
+                
+              %p.text-gray-700.mb-2
+                =r.content
+              .flex.items-center 
+                %span.mr-2.text-sm.text-gray-800
+                  =time_ago_in_words(r.created_at)
+                =button_to '👍', product_review_likes_path(@product, r), method: :post, class: "mx-1"
+                =r.likes.count
+        =paginate @reviews

@@ -22,5 +22,9 @@
   .my-5
     = form.label :product_image
     = form.file_field :product_image, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"
+  .my-5
+    = form.label :product_variants
+    = form.file_field :product_variants, multiple: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"
+
   .inline
     = form.submit class: "rounded-lg py-3 px-5 bg-blue-600 inline-block font-medium cursor-pointer"

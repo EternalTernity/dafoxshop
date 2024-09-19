@@ -1,0 +1,14 @@
+.max-w-2xl.mx-auto
+    .flex.flex-col.items-start.gap-3
+        -@reviews.each do |r|
+            =image_tag "https://gravatar.com/avatar/52c160622b09015c70fa0f4c25de6cca?s=400&d=robohash&r=x", class: "w-8 h-8 rounded-full"
+            %div.flex.flex-col.w-full.p-4.border-gray-200.bg-gray-100.rounded-e-xl.rounded-es-xl{class:"max-w-[320px] leading-1.5"}
+                .flex.items-center.space-x-2
+                    %span.text-sm.font-semibold.text-gray-900    
+                        =r.user.first_name
+                    %span.text-sm.font-normal.text-gray-500
+                        =r.created_at
+                %p.text-sm.font-normal.py-3.text-gray-900
+                    =r.content
+                
+            =button_to "approve", is_published_admin_review_path(r), method: :patch, data:{turbo_confirm: "are u sure?"}

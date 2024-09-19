@@ -12,6 +12,8 @@
     %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
     %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
     %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
+    = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css", media: "all"
+
     = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
@@ -62,3 +64,30 @@
           = icon('fa-solid', 'calendar')
           = link_to "30 Days Free Return",root_path
     = yield
+    %footer.text-white.py-12{:class => "bg-[#06032C] mt-[15%]"}
+      .container.mx-auto.px-4
+        .grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-4.gap-8
+          %div
+            .flex.items-center.mb-4
+              = link_to image_tag("flarego-shop-logo.png"), root_path
+            %p.text-sm.text-gray-400 It started with a crazy idea, and is now being used by thousands of people nationwide and in other countries.
+          %div
+            %h3.text-lg.font-semibold.mb-4 Quicklinks
+            .grid.grid-cols-1.md:grid-cols-3.gap-8
+              %div
+                %ul.space-y-2
+                  -["Home","DafoxTech","AdoPisoft"].each do |i|
+                    %li
+                      =link_to i, root_path, class: "hover:text-cyan-400 transition-colors"
+              %div        
+                %ul.space-y-2
+                  -["On Sale","Blog and Events","FAQs"].each do |i|
+                    %li
+                      =link_to i, root_path, class: "hover:text-cyan-400 transition-colors"
+              %div        
+                %ul.space-y-2
+                  -["On Sale","Blog and Events","FAQs"].each do |i|
+                    %li
+                      =link_to i, root_path, class: "hover:text-cyan-400 transition-colors"  
+          %div
+            %h3.text-lg.font-semibold.mb-4 Newsletter

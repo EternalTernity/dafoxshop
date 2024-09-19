@@ -2,11 +2,9 @@ class CartsController < ApplicationController
   before_action :authenticate_user!, only: [ :add_to_cart ]
 
   def new
-    # if the current user has cart
     if current_user.cart.present?
       redirect_to cart_path(current_user)
     else
-      # create a cart for the the current user
       @cart=current_user.build_cart
       if @cart.save
         redirect_to cart_path(current_user.cart)
@@ -20,12 +18,12 @@ class CartsController < ApplicationController
     if @product
       @cart=current_user.cart||current_user.build_cart
       cart_item=@cart.cart_items.find_or_initialize_by(product: @product)
-      cart_item.quantity += params[:quantity].to_i unless cart_item.quantity.nil?
+      cart_item.quantity += params[:quantity].to_i if params[:quantity].nil?
       cart_item.assign_attributes(price: @product.price)
       cart_item.save!
     end
 
-    redirect_to carts_path, notice: "You have added to a cart"
+    redirect_to product_path(@product), notice: "You have added to a cart"
   end
 
   def remove_from_cart
@@ -63,23 +61,28 @@ class CartsController < ApplicationController
     @cart=current_user.cart
     @product=Product.find_by(id: params[:product_id])
     @cart_item=@cart.cart_items.find_or_initialize_by(product: @product)
-
-    new_quantity=@cart_item.quantity.to_i + 1
-
-    if @cart_item.update(quantity: new_quantity)
-      redirect_to cart_path(@cart)
+    
+    if @cart_item
+      @cart_item.increment(:quantity)
     else
-      redirect_to cart_path(@cart)
+      @cart.cart_items.build(product_id: @product.id, quantity: 1)
     end
+
+    @cart_item.save
+    redirect_to cart_path(@cart)
   end
 
   def reduce_quantity
     @cart=current_user.cart
     @product=Product.find_by(id: params[:product_id])
     @cart_item=@cart.cart_items.find_or_initialize_by(product: @product)
-    @cart_item.quantity = [ 0, @cart_item.quantity - 1 ].max
-    redirect_to cart_path(@cart) if @cart_item.update(quantity: @cart_item.quantity)
-    @cart_item.destroy if @cart_item.quantity <= 0
+
+    if @cart_item
+      @cart_item.decrement(:quantity)
+      @cart_item.save
+      @cart_item.destroy if @cart_item.quantity <= 0
+    end
+    redirect_to cart_path(@cart)
   end
 
   def clear_all_carts

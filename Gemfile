@@ -81,3 +81,5 @@ gem "friendly_id", "~> 5.5"
 gem "searchkick", "~> 5.4"
 
 gem "elasticsearch", "~> 8.15"
+
+gem "kaminari", "~> 1.2"

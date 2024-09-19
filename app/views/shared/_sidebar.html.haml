@@ -16,6 +16,11 @@
           .flex.items-center.p-2.text-gray-900.rounded-lg.dark:text-white.hover:bg-gray-100.dark:hover:bg-gray-700
             = icon('fa-solid','cart-shopping')
             %span.ml-3 Product Items
+      %li
+        = link_to admin_reviews_path do
+          .flex.items-center.p-2.text-gray-900.rounded-lg.dark:text-white.hover:bg-gray-100.dark:hover:bg-gray-700
+            = icon('fa-solid','cart-shopping')
+            %span.ml-3 Reviews      
       - if user_signed_in?
         %li
           = link_to destroy_user_session_path,data: { "turbo-method": :delete, "turbo-confirm": "Are you sure you want to sign out?" } do

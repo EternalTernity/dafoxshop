@@ -29,6 +29,9 @@
                   %td.px-6.py-4.whitespace-nowrap.tex-sm.font-medium.text-gray-800.underline
                     - if p.product_image.attached?
                       = image_tag(p.image_webp,width:100,height:100)
+                    - p.product_variants.each_with_index do |var|
+                    
+                      =image_tag var.variant(resize_to_limit: [500,500])
                   %td.px-6.py-4.whitespace-nowrap.tex-sm.font-medium.text-gray-800.underline
                     = link_to p.name, edit_admin_product_path(p.id || p.slug)
                   %td.px-6.py-4.whitepsace-nowrap.tex-sm.font-medium.text-gray-800

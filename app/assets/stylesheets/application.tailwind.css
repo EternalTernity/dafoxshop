@@ -28,6 +28,36 @@ body{
     font-family: nexa-trialregular;
 }
 
+.star-rating{
+    display: inline-block;
+    position: relative;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.stars-inner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: calc(var(--rating) / var(--total-stars) * 100%);
+    color: gold;
+}
+
+.stars-outer{
+    position: relative;
+    display: inline-block;
+    font-family: FontAwesome;
+    color: lightgray;
+}
+
+.stars-outer::before,
+.stars-inner::before{
+    content: "\f005\f005\f005\f005\f005"; /* 5 stars in FontAwesome */
+    font-family: FontAwesome;
+}
+
 @layer components {
     .card-wrapper {
         @apply w-full shadow-[0_2px_10px_#ccc] bg-[#ECF1F3] mb-5 p-[30px] rounded-[20px] border-[5px] border-solid border-white;

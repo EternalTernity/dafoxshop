@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_18_094521) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_19_050411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_094521) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "review_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id"], name: "index_likes_on_review_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "payment_methods", force: :cascade do |t|
     t.string "name"
     t.string "fee_type"
@@ -92,6 +101,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_094521) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_products_on_slug"
+  end
+
+  create_table "replies", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "review_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id"], name: "index_replies_on_review_id"
+    t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -127,6 +146,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_18_094521) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "users"
+  add_foreign_key "likes", "reviews"
+  add_foreign_key "likes", "users"
+  add_foreign_key "replies", "reviews"
+  add_foreign_key "replies", "users"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
 end

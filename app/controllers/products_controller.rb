@@ -15,7 +15,8 @@ class ProductsController < ApplicationController
 
   # GET /products/1 or /products/1.json
   def show
-    @reviews=Review.where(product_id: @product.id).order("created_at DESC")
+    @product=Product.friendly.find(params[:id])
+    @reviews=@product.reviews.page(params[:page]).per(5)
   end
 
   # GET /products/new
