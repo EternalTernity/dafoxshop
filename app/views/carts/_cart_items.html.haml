@@ -20,14 +20,14 @@
                                                 %div
                                                     %h3.font-semibold
                                                         =cart.product.name
-                                                        =link_to "X Remove", remove_from_cart_cart_path(cart), method: :delete, class:"text-sm text-gray-500 flex items-center mt-1"
+                                                        =button_to "X Remove", remove_from_cart_cart_path(cart), method: :delete, class:"text-sm text-gray-500 flex items-center mt-1"
                                     %td.py-4
                                         .flex.items-center.justify-center
                                             .inline-flex.rounded-md.shadow-md{role: "group"}
-                                                =link_to "-", reduce_quantity_cart_path(cart), method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-s-lg hover:text-blue-700"
+                                                =button_to "-", reduce_quantity_cart_path(cart), method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-s-lg hover:text-blue-700"
                                                 %span.px-4.py-2.text-md.font-md.text-gray-900.border.hover:text-blue-700
                                                     =cart.quantity
-                                                =link_to "+", add_quantity_cart_path(cart),method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-e-lg hover:text-blue-700" 
+                                                =button_to "+", add_quantity_cart_path(cart),method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-e-lg hover:text-blue-700" 
                                     %td.py-4.text-right
                                         =number_to_currency(cart.product.price, unit: "PHP ")
                                     %td.py-4.text-right

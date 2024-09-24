@@ -10,13 +10,15 @@ class OrdersController < ApplicationController
     current_cart.cart_items.each do |ci|
       @order.order_items.build(product: ci.product, quantity: ci.quantity.to_i)
     end
+
+    @order.email ||= current_user.email
     @order.total=current_cart.total
     if @order.save
       current_cart.cart_items.destroy_all
       if user_signed_in?
         redirect_to order_path(@order.token)
       else
-        redirect_to guest_order(@order, email: @order.email)
+        redirect_to guest_order_path(@order.token, email: @order.email)
       end
     else
       redirect_to root_path

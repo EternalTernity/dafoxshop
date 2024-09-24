@@ -40,9 +40,9 @@
         .flex.justify-end.items-center.space-x-2.text-white
           = icon('fa-solid', 'user',class:"text-[#BBB6FF]")
           -if user_signed_in?
-            = link_to "Sign Out",destroy_user_session_path, method: :delete,data:{turbo_method: :delete},class:"pr-3"
+            = button_to "Sign Out",destroy_user_session_path, method: :delete,class:"pr-3"
           -else
-            =link_to "Sign In", new_user_session_path,class: "pr-3"  
+            =button_to "Sign In", new_user_session_path,class: "pr-3"  
           = icon('fa-solid', 'heart',class:"text-[#BBB6FF]")
           = link_to "Wishlist",root_path,class:"pr-3"
           = icon('fa-solid', 'cart-shopping',class:"text-[#BBB6FF]")
