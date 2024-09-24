@@ -46,9 +46,8 @@
           = icon('fa-solid', 'heart',class:"text-[#BBB6FF]")
           = link_to "Wishlist",root_path,class:"pr-3"
           = icon('fa-solid', 'cart-shopping',class:"text-[#BBB6FF]")
-          
-          =render "carts/cart_count"
-          = link_to "Cart",carts_path,class:"pr-3"
+     
+          = link_to "Cart",cart_path,class:"pr-3"
     %nav{:class => "bg-[#181546]"}
       .flex.flex-wrap.justify-between.items-center.max-w-screen-2xl.mx-auto.py-3.p-4
         .flex.item-center.space-x-5

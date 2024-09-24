@@ -6,6 +6,22 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  helper_method :current_cart
+
+  def current_cart
+    if user_signed_in?
+      if current_user.cart.nil?
+        cart = Cart.create(user: current_user)
+      else
+        cart = current_user.cart
+      end
+      session[:cart_id] = cart.id
+      cart
+    else
+      session_cart
+    end
+  end
+
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
   end
@@ -17,6 +33,17 @@ class ApplicationController < ActionController::Base
   def after_sign_up_path_for(resource_or_scope)
     new_user_session_path
   end
+
+  private
+  def session_cart
+    cart = Cart.find(session[:cart_id]) if session[:cart_id]
+    if cart.nil?
+      cart ||= Cart.create
+      session[:cart_id] = cart.id
+    end
+    cart
+  end
+
   protected
 
   def configure_permitted_parameters

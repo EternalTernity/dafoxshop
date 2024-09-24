@@ -1,40 +1,45 @@
-.container.mx-auto.p-4
-    .flex.flex-col.lg:flex-row.gap-8
-        %div.overflow-x-auto{class:"lg:w-2/3"}
-            %div{class:"min-w-[600px]"}
-                %table.w-full
-                    %thead
-                        %tr.border-b
-                            %th.text-left.py-2 Product
-                            %th.text-center.py-2 Quantity
-                            %th.text-right.py-2 Price
-                            %th.text-right.py-2 Subtotal
-                    %tbody
-                        -@cart_items.each do |cart|
+-if @cart.cart_items.any?
+    .container.mx-auto.p-4
+        .flex.flex-col.lg:flex-row.gap-8
+            %div.overflow-x-auto{class:"lg:w-2/3"}
+                %div{class:"min-w-[600px]"}
+                    %table.w-full
+                        %thead
                             %tr.border-b
-                                %td.py-4
-                                    .flex.items-center
-                                        -if cart.product.product_image.attached?
-                                            =image_tag(cart.product.product_image, class:"w-20 h-20 object-cover mr-4")
-                                            %div
-                                                %h3.font-semibold
-                                                    =cart.product.name
-                                                    =link_to "X Remove", remove_from_cart_cart_path(@cart, product_id: cart.product.id), class:"text-sm text-gray-500 flex items-center mt-1"
-                                %td.py-4
-                                    .flex.items-center.justify-center
-                                        .inline-flex.rounded-md.shadow-md{role: "group"}
-                                            =link_to "-", reduce_quantity_cart_path(@cart, product_id: cart.product.id), method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-s-lg hover:text-blue-700"
-                                            %span.px-4.py-2.text-md.font-md.text-gray-900.border.hover:text-blue-700
-                                                =cart.quantity
-                                            =link_to "+", add_quantity_cart_path(@cart, product_id: cart.product.id),method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-e-lg hover:text-blue-700" 
-                                %td.py-4.text-right
-                                    =number_to_currency(cart.price, unit: "PHP ")
-                                %td.py-4.text-right
-                                    =number_to_currency(cart.subtotal, unit: "PHP ")  
-        %div{class:"lg:w-1/3"}
-            .card-wrapper
-                %h2.text-xl.font-semibold.mb-4 Cart 
-                .flex.justify-between.mb-2
-                    %span Total
-                    %span 
-                        =number_to_currency(@cart.total, unit: "PHP ")
+                                %th.text-left.py-2 Product
+                                %th.text-center.py-2 Quantity
+                                %th.text-right.py-2 Price
+                                %th.text-right.py-2 Subtotal
+                        %tbody
+                            -@cart.cart_items.each do |cart|
+                                %tr.border-b
+                                    %td.py-4
+                                        .flex.items-center
+                                            -if cart.product.product_image.attached?
+                                                =image_tag(cart.product.product_image, class:"w-20 h-20 object-cover mr-4")
+                                                %div
+                                                    %h3.font-semibold
+                                                        =cart.product.name
+                                                        =link_to "X Remove", remove_from_cart_cart_path(cart), method: :delete, class:"text-sm text-gray-500 flex items-center mt-1"
+                                    %td.py-4
+                                        .flex.items-center.justify-center
+                                            .inline-flex.rounded-md.shadow-md{role: "group"}
+                                                =link_to "-", reduce_quantity_cart_path(cart), method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-s-lg hover:text-blue-700"
+                                                %span.px-4.py-2.text-md.font-md.text-gray-900.border.hover:text-blue-700
+                                                    =cart.quantity
+                                                =link_to "+", add_quantity_cart_path(cart),method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-e-lg hover:text-blue-700" 
+                                    %td.py-4.text-right
+                                        =number_to_currency(cart.product.price, unit: "PHP ")
+                                    %td.py-4.text-right
+                                        =number_to_currency(cart.quantity * cart.product.price, unit: "PHP ")  
+            %div{class:"lg:w-1/3"}
+                .card-wrapper
+                    %h2.text-xl.font-semibold.mb-4 Cart 
+                    .flex.justify-between.mb-2
+                        %span Total
+                        %span 
+                            =number_to_currency(@cart.total, unit: "PHP ")
+    .text-center
+        =link_to "Checkout", new_order_path, class:"btn-cta"
+-else
+    %h1.font-extrabold.text-7xl.text-center Your cart is empty      

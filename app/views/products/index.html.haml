@@ -1,6 +1,14 @@
-%p#notice.py-2.px-3.bg-green-50.mb-5.text-green-500.font-medium.rounded-lg.inline-block= notice
-#products
-  - @products.each do |product|
-    = render product
-    %p
-      = link_to "Show this product", product
+.container.mx-auto.px-4.py-8
+  .grid.grid-cols-1.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4.gap-6
+    - @products.each do |product|
+      .overflow-hidden
+        .relative
+          - if product.product_image.attached?
+            = image_tag(product.image_webp, class: "w-full h-48 object-cover")
+        .p-4 
+          %h2.text-lg.font-semibold.text-gray-800.my-3
+            =link_to product.name, product_path(product), class:"cursor-pointer"
+          %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
+          .flex.items-center.mb-2
+            %span.text-lg.font-bold.text-sky-500.mr-3
+              =number_to_currency(product.price, unit: "PHP ")

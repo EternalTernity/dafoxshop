@@ -1,29 +1,29 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :addresses
-  get "carts", to: "carts#show"
-  resources :carts do
-    member do
-      match "/add_to_cart/:product_id", action: :add_to_cart, via: [ :get, :post ], as: "add_to_cart"
-      match "/remove_from_cart/:product_id", action: :remove_from_cart, via: [ :get, :delete ], as: "remove_from_cart"
 
-      # add and reduce
-      match "/add_quantity/:product_id", action: :add_quantity, via: [ :get, :patch ], as: "add_quantity"
-      match "/reduce_quantity/:product_id", action: :reduce_quantity, via: [ :get, :patch ], as: "reduce_quantity"
+  # resources :cart, only: [ :show ] do
+  #   post "add_to_cart/:product_id", to: "carts#add_to_cart", as: "add_to_cart"
+  # end
 
-      # delete all
-      match "clear_all_carts", via: [ :get, :post ]
-    end
+  resource :cart, only: [ :show ] do
+    post "add_to_cart/:product_id", to: "carts#add_to_cart", as: :add_to_cart
+    delete "remove_from_cart/:id", to: "carts#remove_from_cart", as: :remove_from_cart
+    patch "add_quantity/:id", to: "carts#add_quantity", as: :add_quantity
+    patch "reduce_quantity/:id", to: "carts#reduce_quantity", as: :reduce_quantity
   end
+
   resources :products do
-    resources :reviews, only: [ :create] do
-      resources :likes, only: [:create, :destroy]
+    resources :reviews, only: [ :create ] do
+      resources :likes, only: [ :create, :destroy ]
     end
     collection do
       get "search"
     end
   end
 
+  resources :orders, only: [ :create, :show, :new ]
+  get "orders/:id/:email", to: "orders#show", as: :guest_order
+  resources :addresses
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  root "home#index"
+  root "products#index"
 
   namespace :admin do
     get "/" => "home#index"

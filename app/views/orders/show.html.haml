@@ -1,0 +1,11 @@
+-@order.order_items.each do |oi|
+    =oi.product.name
+    =oi.quantity
+    =oi.subtotal
+
+=@order.total
+
+%p Shipping Address
+=@order.city
+=@order.province
+=@order.barangay

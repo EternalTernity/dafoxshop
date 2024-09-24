@@ -1,15 +1,9 @@
 class Cart < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :cart_items
   has_many :products, through: :cart_items
-  before_save :update_total
 
   def total
-    cart_items.collect { |ci| !ci.quantity.nil? ? (ci.quantity*ci.price):0 }.sum
-  end
-
-  private
-  def update_total
-    self[:total]=total
+    cart_items.sum { |item| item.product.price * item.quantity }
   end
 end

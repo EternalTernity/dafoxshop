@@ -1,92 +1,47 @@
 class CartsController < ApplicationController
-  before_action :authenticate_user!, only: [ :add_to_cart ]
-
-  def new
-    if current_user.cart.present?
-      redirect_to cart_path(current_user)
-    else
-      @cart=current_user.build_cart
-      if @cart.save
-        redirect_to cart_path(current_user.cart)
-      end
-    end
-  end
-
   def add_to_cart
-    @product=Product.find_by(id: params[:product_id])
+    product=Product.find_by(slug: params[:product_id])
+    quantity=params[:quantity].to_i
+    cart_item=current_cart.cart_items.find_by(product: product)
 
-    if @product
-      @cart=current_user.cart||current_user.build_cart
-      cart_item=@cart.cart_items.find_or_initialize_by(product: @product)
-      cart_item.quantity += params[:quantity].to_i if params[:quantity].nil?
-      cart_item.assign_attributes(price: @product.price)
-      cart_item.save!
+    if cart_item
+      cart_item.update(quantity: cart_item.quantity + quantity)
+    else
+      current_cart.cart_items.create(product: product, quantity: quantity, price: product.price)
     end
 
-    redirect_to product_path(@product), notice: "You have added to a cart"
+    redirect_to cart_path
   end
 
   def remove_from_cart
-    @cart=current_user.cart
-    @product=Product.find_by(id: params[:product_id])
-    @cart_item=@cart.cart_items.find_by(product: @product)
-
-    if @cart_item
-      @cart_item.destroy
-      if @cart.cart_items.empty?
-        redirect_to root_path, notice: "Your cart is empty."
-      else
-        redirect_to cart_path(current_user.cart), notice: "You have removed a product from cart."
-      end
-    else
-      redirect_to @cart
-    end
+    cart_item=current_cart.cart_items.find(params[:id])
+    cart_item.destroy
+    redirect_to cart_path
   end
 
   def show
-    if current_user.nil?
-      redirect_to new_user_session_path
-    else
-      @cart=current_user.cart || current_user.build_cart
-      @product=Product.find_by(id: params[:id])
-      @cart_items=@cart.cart_items
-
-      if @cart_items.empty?
-        redirect_to root_path
-      end
-    end
+    @cart=current_cart
   end
 
   def add_quantity
-    @cart=current_user.cart
-    @product=Product.find_by(id: params[:product_id])
-    @cart_item=@cart.cart_items.find_or_initialize_by(product: @product)
-    
-    if @cart_item
-      @cart_item.increment(:quantity)
-    else
-      @cart.cart_items.build(product_id: @product.id, quantity: 1)
-    end
-
-    @cart_item.save
-    redirect_to cart_path(@cart)
+    cart_item=current_cart.cart_items.find(params[:id])
+    cart_item.update(quantity: cart_item.quantity + 1)
+    redirect_to cart_path
   end
 
   def reduce_quantity
-    @cart=current_user.cart
-    @product=Product.find_by(id: params[:product_id])
-    @cart_item=@cart.cart_items.find_or_initialize_by(product: @product)
-
-    if @cart_item
-      @cart_item.decrement(:quantity)
-      @cart_item.save
-      @cart_item.destroy if @cart_item.quantity <= 0
+    cart_item=current_cart.cart_items.find(params[:id])
+    if cart_item.quantity > 1
+      cart_item.update(quantity: cart_item.quantity - 1)
+      redirect_to cart_path
+    else
+      cart_item.destroy
+      redirect_to cart_path
     end
-    redirect_to cart_path(@cart)
   end
 
   def clear_all_carts
-    current_user.cart.cart_items.destroy_all
+    current_cart.cart_items.destroy_all
     redirect_to root_path
   end
 end

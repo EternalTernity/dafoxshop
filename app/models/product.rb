@@ -1,8 +1,11 @@
 class Product < ApplicationRecord
   has_one_attached :product_image
   has_many_attached :product_variants
+
   has_many :cart_items
   has_many :carts, through: :cart_items
+
+  has_many :order_items
 
   validates :name, presence: true
   validates :description, presence: true

@@ -3,7 +3,7 @@
     %div{class:"md:w-1/2"}
       .flex.gap-4
         %div{class:"w-1/5"}
-          -@product.product_variants.each_with_index do |var|
+          -@product.product_variants.each do |var|
             =image_tag var.variant(resize_to_limit: [500,500])
         %div{class:"w-4/5"}
           .product-wrapper
@@ -31,8 +31,7 @@
         .text-xl.font-semibold.mb-2
           =@product.description
       .mt-8
-        =form_with url: add_to_cart_cart_path(product_id: @product.id), method: :post do
-          =hidden_field_tag :product_id, @product.id
+        =form_with url: add_to_cart_cart_path(@product), method: :post do
           =label_tag "Quantity"
           =number_field_tag :quantity, 1, min: 1
           =submit_tag "Add to cart", class: "btn-cta" 

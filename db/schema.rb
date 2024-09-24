@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_19_050411) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_23_062430) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,7 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_19_050411) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.decimal "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -82,6 +82,37 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_19_050411) do
     t.datetime "updated_at", null: false
     t.index ["review_id"], name: "index_likes_on_review_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "product_id", null: false
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "quantity"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "user_id"
+    t.decimal "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "payment_method"
+    t.string "city"
+    t.string "province"
+    t.string "barangay"
+    t.integer "zip_code"
+    t.string "street"
+    t.string "house_number"
+    t.string "token"
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "phone_number"
+    t.string "email"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -148,6 +179,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_19_050411) do
   add_foreign_key "carts", "users"
   add_foreign_key "likes", "reviews"
   add_foreign_key "likes", "users"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "users"
   add_foreign_key "replies", "reviews"
   add_foreign_key "replies", "users"
   add_foreign_key "reviews", "products"
