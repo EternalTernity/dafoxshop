@@ -77,5 +77,13 @@ body{
     .thumbnail-wrapper {
         @apply shadow-[0_2px_20px_#cccccc7a] leading-[130px] text-center bg-[#ECF1F3] mb-5 rounded-[15px] border-4 border-solid border-white;
     }
+    
+    .form-field{
+        @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500
+    }
+
+    .form-label{
+        @apply block text-sm font-medium text-gray-700 mb-1
+    }
 }
 

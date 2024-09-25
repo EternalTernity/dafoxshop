@@ -1,10 +1,11 @@
-.container.mx-auto.px-4.py-8.space-y-3 
+.container.mx-auto.p-4 
   .flex.flex-col.md:flex-row.gap-8
     %div{class:"md:w-1/2"}
       .flex.gap-4
         %div{class:"w-1/5"}
           -@product.product_variants.each do |var|
-            =image_tag var.variant(resize_to_limit: [500,500])
+            .thumbnail-wrapper
+              =image_tag var, class: "w-full h-full object-cover rounded-lg"
         %div{class:"w-4/5"}
           .product-wrapper
             -if @product.product_image.attached?
@@ -31,9 +32,9 @@
         .text-xl.font-semibold.mb-2
           =@product.description
       .mt-8
-        =form_with url: add_to_cart_cart_path(@product), method: :post do
+        =form_with url: add_to_cart_cart_path(@product), method: :post, class: "space-y-3" do
           =label_tag "Quantity"
-          =number_field_tag :quantity, 1, min: 1
+          =number_field_tag :quantity, 1, min: 1, class: "rounded-lg"
           =submit_tag "Add to cart", class: "btn-cta" 
   .grid.md:grid-cols-2.gap-8.p-5
     %div

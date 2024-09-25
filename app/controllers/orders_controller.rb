@@ -1,18 +1,25 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, only: [ :show ]
+  before_action :authenticate_user!, only: [ :show ], unless: -> { params[:email].present? }
+  before_action :check_total_price, only: [ :new ]
   def new
     @order=Order.new
   end
 
   def create
+    if User.exists?(email: order_params[:email])
+      redirect_to new_user_session_path(email: order_params[:email]), alert: "This email already exists. Please log in."
+      return
+    end
+
     @order=user_signed_in? ? current_user.orders.new(order_params) : Order.new(order_params)
 
     current_cart.cart_items.each do |ci|
       @order.order_items.build(product: ci.product, quantity: ci.quantity.to_i)
     end
 
-    @order.email ||= current_user.email
+    @order.email ||= current_user&.email
     @order.total=current_cart.total
+
     if @order.save
       current_cart.cart_items.destroy_all
       if user_signed_in?
@@ -25,12 +32,27 @@ class OrdersController < ApplicationController
     end
   end
 
+  def check_total_price
+    if current_cart.total.zero?
+      flash[:error]="You have no orders, redirecting to your carts"
+      puts "You have no orders, redirecting to your carts"
+      redirect_to cart_path
+    end
+  end
   def show
+    if params[:email].present?
+      user=User.find_by(email: params[:email])
+      if user.present?
+        redirect_to new_user_session_path, alert: "Email already exist. Please sign-in manually.", email: params[:email]
+        return
+      end
+    end
+
     if user_signed_in?
       @order=current_user.orders.find_by(token: params[:id])
     else
-      @order=Order.find(params[:id])
-      unless @order.email == params[:email]
+      @order=Order.find_by(token: params[:id])
+      unless @order&.email == params[:email]
         redirect_to root_path
       end
     end
@@ -39,6 +61,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:payment_method, :city, :province, :barangay, :zip_code, :street, :house_number, :first_name, :last_name, :phone_number, :email)
+    params.require(:order).permit(:payment_method, :city, :province, :barangay, :zip_code, :street, :house_number, :first_name, :last_name, :phone_number, :email, :password)
   end
 end

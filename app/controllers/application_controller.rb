@@ -18,7 +18,12 @@ class ApplicationController < ActionController::Base
       session[:cart_id] = cart.id
       cart
     else
-      session_cart
+      cart = Cart.find(session[:cart_id]) if session[:cart_id]
+      if cart.nil?
+        cart ||= Cart.create
+        session[:cart_id] = cart.id
+      end
+      cart
     end
   end
 
@@ -32,16 +37,6 @@ class ApplicationController < ActionController::Base
 
   def after_sign_up_path_for(resource_or_scope)
     new_user_session_path
-  end
-
-  private
-  def session_cart
-    cart = Cart.find(session[:cart_id]) if session[:cart_id]
-    if cart.nil?
-      cart ||= Cart.create
-      session[:cart_id] = cart.id
-    end
-    cart
   end
 
   protected

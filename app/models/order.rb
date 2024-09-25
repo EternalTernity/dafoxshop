@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
 
   validates :city, :province, :barangay, :zip_code, :street, :house_number, presence: true
-
+  validates :first_name, :last_name, :email, presence: true, unless: -> { user.present? }
   before_create :generate_token
 
   def total
@@ -12,6 +12,6 @@ class Order < ApplicationRecord
   end
 
   def generate_token
-    self.token=SecureRandom.hex(20) if token.blank?
+    self.token=SecureRandom.hex(50) if token.blank?
   end
 end

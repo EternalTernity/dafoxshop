@@ -5,6 +5,10 @@
 
 =@order.total
 
+-if @order.email.present?
+    %p
+    =@order.email
+
 %p Shipping Address
 =@order.city
 =@order.province
