@@ -83,3 +83,5 @@ gem "searchkick", "~> 5.4"
 gem "elasticsearch", "~> 8.15"
 
 gem "kaminari", "~> 1.2"
+
+gem "devise_invitable", "~> 2.0"

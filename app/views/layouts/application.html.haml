@@ -46,7 +46,7 @@
           = icon('fa-solid', 'heart',class:"text-[#BBB6FF]")
           = link_to "Wishlist",root_path,class:"pr-3"
           = icon('fa-solid', 'cart-shopping',class:"text-[#BBB6FF]")
-     
+    
           = link_to "Cart",cart_path,class:"pr-3"
     %nav{:class => "bg-[#181546]"}
       .flex.flex-wrap.justify-between.items-center.max-w-screen-2xl.mx-auto.py-3.p-4
@@ -90,3 +90,7 @@
                       =link_to i, root_path, class: "hover:text-cyan-400 transition-colors"  
           %div
             %h3.text-lg.font-semibold.mb-4 Newsletter
+            -# fix this code to create a new invitation
+            =form_with model: User, url: user_invitation_path, local: true do |f|      
+              =f.text_field :email
+              =f.submit "sub"

@@ -1,3 +1,5 @@
+# use this code in addition to the devise invitable
+
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [ :show ], unless: -> { params[:email].present? }
   before_action :check_total_price, only: [ :new ]
@@ -7,8 +9,9 @@ class OrdersController < ApplicationController
 
   def create
     if User.exists?(email: order_params[:email])
-      redirect_to new_user_session_path(email: order_params[:email]), alert: "This email already exists. Please log in."
-      return
+      puts "email already exists, displaying the field..."
+      @show_password=true
+      render :new and return
     end
 
     @order=user_signed_in? ? current_user.orders.new(order_params) : Order.new(order_params)
@@ -21,6 +24,7 @@ class OrdersController < ApplicationController
     @order.total=current_cart.total
 
     if @order.save
+
       current_cart.cart_items.destroy_all
       if user_signed_in?
         redirect_to order_path(@order.token)
