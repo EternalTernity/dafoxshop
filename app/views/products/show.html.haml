@@ -5,11 +5,11 @@
         %div{class:"w-1/5"}
           -@product.product_variants.each do |var|
             .thumbnail-wrapper
-              =image_tag var, class: "w-full h-full object-cover rounded-lg"
+              =image_tag var, class: "w-full aspect-square rounded-lg", onclick: "changeMainImage(this.src)"
         %div{class:"w-4/5"}
           .product-wrapper
             -if @product.product_image.attached?
-              = image_tag(@product.image_webp, class: "w-full h-full object-cover")
+              = image_tag(@product.image_webp, class: "w-full h-full object-cover", id: "mainImage")
     %div{class:"md:w-1/2"}
       .flex.justify-between.items-start
         %h1.text-3xl.font-bold.text-indigo-900 
@@ -80,3 +80,8 @@
                 =button_to '👍', product_review_likes_path(@product, r), method: :post, class: "mx-1"
                 =r.likes.count
         =paginate @reviews
+
+:javascript
+  function changeMainImage(src) {
+    document.getElementById("mainImage").src = src;
+  }       
