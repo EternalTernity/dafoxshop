@@ -1,4 +1,5 @@
 class CartsController < ApplicationController
+  after_action :send_email, only: [ :add_to_cart ]
   def add_to_cart
     product=Product.find_by(slug: params[:product_id])
     quantity=params[:quantity].to_i
@@ -43,5 +44,10 @@ class CartsController < ApplicationController
   def clear_all_carts
     current_cart.cart_items.destroy_all
     redirect_to root_path
+  end
+
+  def send_email
+    product=Product.find_by(slug: params[:product_id])
+    UserMailer.welcome(product).deliver_now
   end
 end
