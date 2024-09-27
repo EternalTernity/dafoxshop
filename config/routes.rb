@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "collections/adopisoft", to: "products#adopisoft"
   devise_for :users, controllers: { invitations: "devise/invitations" }
 
   resources :users do
