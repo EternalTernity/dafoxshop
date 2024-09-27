@@ -1,16 +1,24 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  def adopisoft
+    @categories=Category.all
+    if params[:category].present?
+      @cat=Category.find(params[:category])
+      @products=@cat.products
+    else
+      @products = Product.all
+    end
+  end
   def search
     if params[:search].present?
       @products=Product.where(name: params[:search])
     else
       redirect_to root_path
-
     end
   end
   # GET /products or /products.json
   def index
-    @products = Product.all
+    @products=Product.all
   end
 
   # GET /products/1 or /products/1.json
