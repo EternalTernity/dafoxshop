@@ -8,8 +8,10 @@ class Order < ApplicationRecord
   before_create :generate_token
 
   def total
-    order_items.collect { |ci| ci.quantity.nil? ? (ci.quantity*ci.price):0.0 }.sum
+    order_items.sum { |item| item.product.price * item.quantity }
   end
+
+
 
   def generate_token
     self.token=SecureRandom.hex(50) if token.blank?
