@@ -34,7 +34,7 @@ body{
 .star-rating{
     display: inline-block;
     position: relative;
-    font-size: 30px;
+    font-size: 15px;
     line-height: 1;
 }
 
@@ -71,7 +71,7 @@ body{
     }
 
     .btn-cta {
-        @apply w-full bg-[linear-gradient(180deg,#00EFFE,#0095FF)] w-full text-white min-w-[140px] text-base font-black px-5 py-[13px] border-0 hover:bg-sky-800 rounded-lg;
+        @apply w-full bg-[linear-gradient(180deg,#00EFFE,#0095FF)] text-white min-w-[140px] text-base font-black px-5 py-[13px] border-0 hover:bg-[linear-gradient(180deg,#0095FF,#00EFFE)] rounded-lg hover:shadow-lg shadow-sm cursor-pointer transition ease-in-out delay-150 duration-300;
     }
 
     .thumbnail-wrapper {
@@ -84,6 +84,19 @@ body{
 
     .form-label{
         @apply block text-sm font-medium text-gray-700 mb-1
+    }
+
+    .category-tab-wrapper{
+        @apply w-[220px] shadow-[#b9b9b966_0px_0px_20px] h-[190px] rounded-[20px] border-0 border-[3px] border-solid border-white;
+        background: #ecf1f3;
+    }
+
+    .adopisoft-gradient{
+        @apply bg-gradient-to-r from-[#d420a8] to-[#990174] text-white overflow-hidden
+    }
+
+    .dafox-gradient{
+
     }
 }
 

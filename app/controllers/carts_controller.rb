@@ -11,7 +11,7 @@ class CartsController < ApplicationController
       current_cart.cart_items.create(product: product, quantity: quantity, price: product.price)
     end
 
-    redirect_to cart_path
+    redirect_to cart_path, notice: "You added a cart."
   end
 
   def remove_from_cart
@@ -47,7 +47,6 @@ class CartsController < ApplicationController
   end
 
   def send_email
-    product=Product.find_by(slug: params[:product_id])
-    UserMailer.welcome(product).deliver_now
+    UserMailer.welcome.deliver_now
   end
 end

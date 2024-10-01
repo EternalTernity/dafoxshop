@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # allow_browser versions: :modern
 
   protect_from_forgery with: :exception
 
@@ -27,20 +27,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_out_path_for(resource_or_scope)
-    new_user_session_path
-  end
-
-  def after_sign_in_path_for(resource_or_scope)
-    admin_path
-  end
-
-  def after_sign_up_path_for(resource_or_scope)
-    new_user_session_path
-  end
-
   protected
-
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :phone_number, :password) }
 

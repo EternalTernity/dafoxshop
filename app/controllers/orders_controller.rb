@@ -10,7 +10,8 @@ class OrdersController < ApplicationController
     if User.exists?(email: order_params[:email])
       puts "email already exists, displaying the field..."
       @show_password=true # fix this
-      render :new and return
+      redirect_to new_user_session_path(email: order_params[:email])
+      return
     end
 
     @order=user_signed_in? ? current_user.orders.new(order_params) : Order.new(order_params)
@@ -54,7 +55,7 @@ class OrdersController < ApplicationController
   end
 
   private
-
+  # param is missing or the value is empty: order
   def order_params
     params.require(:order).permit(:payment_method, :city, :province, :barangay, :zip_code, :street, :house_number, :first_name, :last_name, :phone_number, :email, :password)
   end

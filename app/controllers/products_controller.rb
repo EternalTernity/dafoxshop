@@ -1,12 +1,33 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
   def adopisoft
+    @products = Product.all
     @categories=Category.all
+
+    # Filter by category
     if params[:category].present?
-      @cat=Category.find(params[:category])
+      @cat=Category.find_by_name(params[:category])
       @products=@cat.products
     else
       @products = Product.all
+    end
+
+    # Filter by price
+    if params[:price].present?
+      selected_prices=params[:price].map(&:to_i)
+      price_ranges={
+        1 => 51..100,
+        2 => 101..200,
+        3 => 210..300,
+        4 => 901..1000
+      }
+
+      ranges=selected_prices.map { |price|price_ranges[price] }.compact
+      @products=@products.where(price: ranges) unless ranges.empty?
+    end
+    # Filter by star
+    if params[:star].present?
+      @products=@products.select { |product| product.average_rating >= params[:star].to_i }
     end
   end
   def search

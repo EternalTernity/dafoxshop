@@ -7,8 +7,12 @@
             = image_tag(product.image_webp, class: "w-full h-48 object-cover")
         .p-4 
           %h2.text-lg.font-semibold.text-gray-800.my-3
-            =link_to product.name, product_path(product), class:"cursor-pointer"
+            =link_to product.name, product_path(product), class:"cursor-pointer hover:underline"
           %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
-          .flex.items-center.mb-2
+          .flex.items-center
             %span.text-lg.font-bold.text-sky-500.mr-3
               =number_to_currency(product.price, unit: "PHP ")
+          
+          .star-rating{style: "--rating: #{product.average_rating}; --total-stars: 5;"}
+            .stars-outer
+              .stars-inner

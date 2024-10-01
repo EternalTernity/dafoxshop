@@ -1,4 +1,5 @@
--if @cart.cart_items.any?
+=link_to "Continue Shopping", root_path
+-if cart_items.any?
     .container.mx-auto.p-4
         .flex.flex-col.lg:flex-row.gap-8
             %div.overflow-x-auto{class:"lg:w-2/3"}
@@ -11,7 +12,7 @@
                                 %th.text-right.py-2 Price
                                 %th.text-right.py-2 Subtotal
                         %tbody
-                            -@cart.cart_items.each do |cart|
+                            -cart_items.each do |cart|
                                 %tr.border-b
                                     %td.py-4
                                         .flex.items-center
@@ -25,7 +26,7 @@
                                         .flex.items-center.justify-center
                                             .inline-flex.rounded-md.shadow-md{role: "group"}
                                                 =button_to "-", reduce_quantity_cart_path(cart), method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-s-lg hover:text-blue-700"
-                                                %span.px-4.py-2.text-md.font-md.text-gray-900.border.hover:text-blue-700
+                                                %span.px-4.py-2.text-md.font-md.text-gray-900.border
                                                     =cart.quantity
                                                 =button_to "+", add_quantity_cart_path(cart),method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-e-lg hover:text-blue-700" 
                                     %td.py-4.text-right
@@ -42,4 +43,5 @@
     .text-center
         =link_to "Checkout", new_order_path, class:"btn-cta"
 -else
-    %h1.font-extrabold.text-7xl.text-center Your cart is empty      
+    %h1.font-extrabold.text-7xl.text-center Your cart is empty   
+    =link_to "Continue shopping", root_path, class:"btn-cta"   

@@ -1,26 +1,27 @@
+%p#notice.py-2.px-3.bg-green-50.mb-5.text-green-500.font-medium.rounded-lg.inline-block= notice
 .container.mx-auto.p-4
     .flex.flex-col.lg:flex-row.gap-8
         %div{class: "lg:w-2/3"}
             %h2.text-2xl.font-bold.mb-6.mt-8 Shipping Address
-            =form_with model: @order, local:true, class: "space-y-4" do |f|
+            =form_with model: @order, class: "space-y-4" do |f|
                 -unless user_signed_in?
-                    %div.grid.grid-cols-2.gap-4
+                    %div.grid.grid-cols-1.md:grid-cols-2.gap-4
                         %div
-                            =f.label :first_name, class: "form-label"
-                            =f.text_field :first_name, class: "form-field"
+                            =f.label :first_name,  class: "form-label"
+                            =f.text_field :first_name,  class: "form-field"
                         %div
                             =f.label :last_name, class: "form-label"
                             =f.text_field :last_name, class: "form-field"
                     %div
                         =f.label :email, class: "form-label"
-                        =f.text_field :email, class: "form-field"
-                    -if @show_password
-                        %div
-                            =f.label :password
-                            =f.password_field :password
+                        =f.email_field :email,  class: "form-field"
+                -if @show_password
+                    %div
+                        =f.label :password, class: "form-label"
+                        =f.password_field :password, class: "form-field"
                 %div
                     =f.label :city, class: "form-label"
-                    =f.text_field :city, class: "form-field"
+                    =f.text_field :city,  class: "form-field"
                 %div
                     =f.label :province, class: "form-label"
                     =f.text_field :province,class: "form-field"
@@ -29,10 +30,10 @@
                     =f.text_field :barangay,class: "form-field"
                 %div
                     =f.label :zip_code, class: "form-label"
-                    =f.number_field :zip_code,class: "form-field"
-                %div.grid.grid-cols-2.gap-4
+                    =f.number_field :zip_code, class: "form-field"
+                %div.grid.grid-cols-1.md:grid-cols-2.gap-4
                     %div
-                        =f.label :street, class: "form-label"
+                        =f.label :street,  class: "form-label"
                         =f.text_field :street, class: "form-field"
                     %div
                         =f.label :house_number, class: "form-label"
