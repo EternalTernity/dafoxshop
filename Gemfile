@@ -87,3 +87,7 @@ gem "kaminari", "~> 1.2"
 gem "devise_invitable", "~> 2.0"
 
 gem "city-state", "~> 1.1"
+
+gem "pilipinas", "~> 0.1.2"
+
+gem "luzvimin", "~> 2.0"

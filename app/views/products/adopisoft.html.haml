@@ -1,9 +1,14 @@
 .adopisoft-gradient
-    .max-w-2xl.mx-auto.px-4.py-8.md:py-12.flex.flex-col.md:flex-row.items-center
+    .max-w-6xl.mx-auto.px-4.py-8.md:py-12.flex.flex-col.md:flex-row.items-center
         %div{class: "md:w-1/2 mb-8 md:mb-0"}
+            =image_tag("ado-logo.png", class: "mb-4")
+            %h2.text-3xl.md:text-4xl.font-bold.mb-4 Enjoy Up to 20% Off on Your First Purchase!
+            %p.text-lg.mb-6 For a Seamless & Hassle-FREE eLoading services, Gcash, Maya Cash-in and Bills Payment.
+        %div{class: "md:w-1/2 relative"}
+            =image_tag("ado-banner-2.png")
 .container.mx-auto.px-4.py-8
-    .mb-8
-        .flex.flex-wrap.-mb-px
+    .mb-8.overflow-x-auto
+        .flex.space-x-4
             -@categories.each do |c|
                 =link_to c.name, collections_adopisoft_path(category: c.name, price: params[:price], rating: params[:star])
     .flex.flex-col.md:flex-row.gap-8
@@ -27,8 +32,6 @@
                         = select_tag :star, options_for_select((1..5).to_a.reverse.map { |n| ["#{n} Stars & Up", n] }, params[:star]), include_blank: 'All Ratings'
                     %div
                         =f.submit "Submit"
-    
-                =link_to "reset", collections_adopisoft_path
         .flex-grow
             .flex.justify-between.items-center.mb-4
                 .sm:text-xl.text-lg.font-semibold

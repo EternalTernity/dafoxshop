@@ -96,7 +96,7 @@ body{
     }
 
     .dafox-gradient{
-
+        @apply bg-gradient-to-r from-[#d2fff8] via-[#fefbeb] to-[#f1cac2] overflow-hidden
     }
 }
 

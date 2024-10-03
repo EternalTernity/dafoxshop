@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get "collections/adopisoft", to: "products#adopisoft"
+  get "collections/dafoxtech", to: "products#dafoxtech"
   devise_for :users, controllers: { invitations: "devise/invitations" }
 
   resources :users do
@@ -23,7 +24,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :orders, only: [ :create, :show, :new ]
+  resources :orders, only: [ :create, :show, :new ] do
+    collection do
+      get "list_cities"
+      get "list_barangays"
+    end
+  end
   get "orders/:id", to: "orders#show", as: :guest_order
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

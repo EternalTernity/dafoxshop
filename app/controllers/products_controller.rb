@@ -1,5 +1,8 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+
+  def dafoxtech
+  end
   def adopisoft
     @products = Product.all
     @categories=Category.all

@@ -2,14 +2,11 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [ :show ], unless: -> { params[:email].present? }
   before_action :check_total_price, only: [ :new ]
   def new
-    @order=Order.new
-    @show_password=false
+    @order=Order.new order_params
   end
 
   def create
     if User.exists?(email: order_params[:email])
-      puts "email already exists, displaying the field..."
-      @show_password=true # fix this
       redirect_to new_user_session_path(email: order_params[:email])
       return
     end
@@ -32,6 +29,7 @@ class OrdersController < ApplicationController
         redirect_to guest_order_path(@order.token, email: @order.email)
       end
     else
+      puts @order.errors.full_messages
       redirect_to root_path
     end
   end
@@ -55,8 +53,7 @@ class OrdersController < ApplicationController
   end
 
   private
-  # param is missing or the value is empty: order
   def order_params
-    params.require(:order).permit(:payment_method, :city, :province, :barangay, :zip_code, :street, :house_number, :first_name, :last_name, :phone_number, :email, :password)
+    params.fetch(:order, {}).permit(:payment_method, :city, :province, :barangay, :zip_code, :street, :house_number, :first_name, :last_name, :phone_number, :email)
   end
 end
