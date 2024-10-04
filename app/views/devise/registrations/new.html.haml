@@ -20,6 +20,9 @@
     .field.flex.flex-col.pb-3
       = f.label :password_confirmation
       = f.password_field :password_confirmation, autocomplete: "new-password",class:"rounded-2xl"
+    .field.flex.flex-col.pb-3
+      =f.label :avatar
+      =f.file_field :avatar
     .actions
       = f.submit "Sign up"
     = render "devise/shared/links"

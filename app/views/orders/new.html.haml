@@ -19,20 +19,20 @@
                 =turbo_frame_tag :cs_select do
                     %div{"data-controller": "form-element"}
                         =f.button "submit", formaction: new_order_path, formmethod: :get, data: {form_element_target: "autoSubmitBtn", turbo_frame: :cs_select}
-                        -# country
+                     
                         %div
                             =f.label :province, class: "form-label"
-                            =f.select :province,@order.countries,{include_blank: true}, {data: {action: "change->form-element#autoSubmit"}}
+                            =f.select :province,@order.countries,{include_blank: true},class:"form-field",  data: {action: "change->form-element#autoSubmit"}
                         
-                        -# states
+                       
                         %div
                             =f.label :city, class: "form-label"
-                            =f.select :city, @order.states , {include_blank: true}, {data: {action: "change->form-element#autoSubmit"}}
+                            =f.select :city, @order.states , {include_blank: true},class:"form-field", data: {action: "change->form-element#autoSubmit"}
 
-                        -# cities
+                        
                         %div
                             =f.label :barangay, class: "form-label"
-                            =f.select :barangay, @order.cities
+                            =f.select :barangay, @order.cities, {include_blank: true},class:"form-field"
 
                 %div
                     =f.label :zip_code, class: "form-label"

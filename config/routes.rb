@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       resources :likes, only: [ :create, :destroy ]
     end
     collection do
-      get "search"
+      post "search"
     end
   end
 

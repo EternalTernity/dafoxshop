@@ -1,5 +1,5 @@
 .adopisoft-gradient
-    .max-w-6xl.mx-auto.px-4.py-8.md:py-12.flex.flex-col.md:flex-row.items-center
+    .max-w-6xl.mx-auto.px-4.pt-8.md:pt-12.flex.flex-col.lg:flex-row.items-center
         %div{class: "md:w-1/2 mb-8 md:mb-0"}
             =image_tag("ado-logo.png", class: "mb-4")
             %h2.text-3xl.md:text-4xl.font-bold.mb-4 Enjoy Up to 20% Off on Your First Purchase!
@@ -11,6 +11,7 @@
         .flex.space-x-4
             -@categories.each do |c|
                 =link_to c.name, collections_adopisoft_path(category: c.name, price: params[:price], rating: params[:star])
+    
     .flex.flex-col.md:flex-row.gap-8
         .w-full.md:w-64.flex-shrink-0
             %h2.text-xl.font-bold.mb-4.sm:text-2xl Filters
@@ -18,16 +19,16 @@
                 =form_with url: collections_adopisoft_path, method: :get, local: true do |f|
                     %div
                         =check_box_tag "price[]", 1, params[:price]&.include?("1")
-                        =f.label :price, "PHP 51-100"
+                        =f.label :price, "PHP 1000 - 3000"
                     %div
                         =check_box_tag "price[]", 2, params[:price]&.include?("2")
-                        =f.label :price, "PHP 101-200"
+                        =f.label :price, "PHP 3001 - 5000"
                     %div
                         =check_box_tag "price[]", 3, params[:price]&.include?("3")
-                        =f.label :price, "PHP 201-300"
+                        =f.label :price, "PHP 5001 - 7000"
                     %div
                         =check_box_tag "price[]", 4, params[:price]&.include?("4")
-                        =f.label :price, "PHP 301-1000"
+                        =f.label :price, "PHP 7001 - 9999"
                     %div
                         = select_tag :star, options_for_select((1..5).to_a.reverse.map { |n| ["#{n} Stars & Up", n] }, params[:star]), include_blank: 'All Ratings'
                     %div
@@ -40,7 +41,6 @@
                     -if params[:category]
                         %span for
                         =params[:category]
- 
             .grid.grid-cols-1.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4.gap-6
                 - @products.each do |product|
                     .overflow-hidden
@@ -57,3 +57,4 @@
                             .star-rating{style: "--rating: #{product.average_rating}; --total-stars: 5;"}
                                 .stars-outer
                                     .stars-inner
+            =paginate @products

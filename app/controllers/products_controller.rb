@@ -3,6 +3,8 @@ class ProductsController < ApplicationController
 
   def dafoxtech
   end
+
+  #put pages on all products per 5
   def adopisoft
     @products = Product.all
     @categories=Category.all
@@ -19,10 +21,10 @@ class ProductsController < ApplicationController
     if params[:price].present?
       selected_prices=params[:price].map(&:to_i)
       price_ranges={
-        1 => 51..100,
-        2 => 101..200,
-        3 => 210..300,
-        4 => 901..1000
+        1 => 1000..3000,
+        2 => 3001..5000,
+        3 => 5001..7000,
+        4 => 7001..9999
       }
 
       ranges=selected_prices.map { |price|price_ranges[price] }.compact
@@ -32,17 +34,27 @@ class ProductsController < ApplicationController
     if params[:star].present?
       @products=@products.select { |product| product.average_rating >= params[:star].to_i }
     end
+
+    @products = @products.page(params[:page]).per(16)
   end
+  
   def search
-    if params[:search].present?
-      @products=Product.where(name: params[:search])
+    if params[:search_title].present?
+      @products=Product.where("name ILIKE ?", "%#{params[:search_title]}%")
     else
-      redirect_to root_path
+      @products=[]
+    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("search_results", partial: "products/search_results", locals: { products: @products })
+      end
     end
   end
   # GET /products or /products.json
   def index
     @products=Product.all
+
   end
 
   # GET /products/1 or /products/1.json

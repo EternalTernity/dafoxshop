@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
       end
     else
       puts @order.errors.full_messages
-      redirect_to root_path
+      render :new
     end
   end
 

@@ -91,3 +91,9 @@ gem "city-state", "~> 1.1"
 gem "pilipinas", "~> 0.1.2"
 
 gem "luzvimin", "~> 2.0"
+
+gem "faker", "~> 3.4"
+
+gem "open-uri", "~> 0.4.1"
+
+gem "unsplash_image", "~> 0.1.1"
