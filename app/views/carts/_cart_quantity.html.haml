@@ -1,0 +1,7 @@
+%div{id: "cart_quantity_#{cart.id}"}
+    .flex.items-center.justify-center
+        .inline-flex.rounded-md.shadow-md{role: "group"}
+            =button_to "-", reduce_quantity_cart_path(cart), method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-s-lg hover:text-blue-700"    
+            %span.px-4.py-2.text-md.font-md.text-gray-900.border
+                =cart.quantity
+            =button_to "+", add_quantity_cart_path(cart),method: :patch, class: "px-4 py-2 text-md font-md text-gray-900 border rounded-e-lg hover:text-blue-700" 

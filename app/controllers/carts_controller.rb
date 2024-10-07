@@ -27,18 +27,19 @@ class CartsController < ApplicationController
   def add_quantity
     cart_item=current_cart.cart_items.find(params[:id])
     cart_item.update(quantity: cart_item.quantity + 1)
-    redirect_to cart_path
+    # turbo frame for updating quantity w/out refresh
+    update_quantity
   end
 
   def reduce_quantity
     cart_item=current_cart.cart_items.find(params[:id])
     if cart_item.quantity > 1
       cart_item.update(quantity: cart_item.quantity - 1)
-      redirect_to cart_path
     else
       cart_item.destroy
-      redirect_to cart_path
     end
+
+    update_quantity
   end
 
   def clear_all_carts
@@ -48,5 +49,18 @@ class CartsController < ApplicationController
 
   def send_email
     UserMailer.welcome.deliver_now
+  end
+
+  private
+  def update_quantity
+    cart_item=current_cart.cart_items.find(params[:id])
+    render turbo_stream:
+      turbo_stream.replace(
+        "cart_quantity_#{cart_item.id}",
+        partial: "carts/cart_quantity",
+        locals: {
+          cart: cart_item
+        }
+      )
   end
 end

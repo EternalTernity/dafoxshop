@@ -1,0 +1,24 @@
+.flex-grow
+    .flex.justify-between.items-center.mb-4
+        .sm:text-xl.text-lg.font-semibold
+            =pluralize(products.count, "item")
+            %span found 
+            -if params[:category]
+                %span for
+                =params[:category]
+    .grid.grid-cols-1.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4.gap-6
+        - products.each do |product|
+            .overflow-hidden
+                .relative
+                - if product.product_image.attached?
+                    = image_tag(product.image_webp, class: "w-full h-48 object-cover")
+                .p-4 
+                    %h2.text-sm.sm:text-base.font-semibold.text-gray-800.my-3
+                        =link_to product.name, product_path(product), class:"cursor-pointer", data: {turbo_frame: "_top"}
+                    %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
+                    .flex.items-center
+                        %span.text-lg.font-bold.text-sky-500.mr-3
+                            =number_to_currency(product.price, unit: "PHP ")
+                    .star-rating{style: "--rating: #{product.average_rating}; --total-stars: 5;"}
+                        .stars-outer
+                            .stars-inner

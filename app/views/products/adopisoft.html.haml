@@ -7,16 +7,17 @@
         %div{class: "md:w-1/2 relative"}
             =image_tag("ado-banner-2.png")
 .container.mx-auto.px-4.py-8
-    .mb-8.overflow-x-auto
-        .flex.space-x-4
-            -@categories.each do |c|
-                =link_to c.name, collections_adopisoft_path(category: c.name, price: params[:price], rating: params[:star])
+    =turbo_frame_tag "categories_frame" do
+        .mb-8.overflow-x-auto
+            .flex.space-x-4
+                -@categories.each do |c|
+                    =link_to c.name, collections_adopisoft_path(category: c.name, price: params[:price], rating: params[:star]), data: {turbo_frame: "products_frame"}
     
     .flex.flex-col.md:flex-row.gap-8
         .w-full.md:w-64.flex-shrink-0
             %h2.text-xl.font-bold.mb-4.sm:text-2xl Filters
             .mb-6
-                =form_with url: collections_adopisoft_path, method: :get, local: true do |f|
+                =form_with url: collections_adopisoft_path, method: :get,data: {turbo_frame: "products_frame"}, local: true do |f|
                     %div
                         =check_box_tag "price[]", 1, params[:price]&.include?("1")
                         =f.label :price, "PHP 1000 - 3000"
@@ -33,28 +34,6 @@
                         = select_tag :star, options_for_select((1..5).to_a.reverse.map { |n| ["#{n} Stars & Up", n] }, params[:star]), include_blank: 'All Ratings'
                     %div
                         =f.submit "Submit"
-        .flex-grow
-            .flex.justify-between.items-center.mb-4
-                .sm:text-xl.text-lg.font-semibold
-                    =pluralize(@products.count, "item")
-                    %span found 
-                    -if params[:category]
-                        %span for
-                        =params[:category]
-            .grid.grid-cols-1.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4.gap-6
-                - @products.each do |product|
-                    .overflow-hidden
-                        .relative
-                        - if product.product_image.attached?
-                            = image_tag(product.image_webp, class: "w-full h-48 object-cover")
-                        .p-4 
-                            %h2.text-sm.sm:text-base.font-semibold.text-gray-800.my-3
-                                =link_to product.name, product_path(product), class:"cursor-pointer"
-                            %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
-                            .flex.items-center
-                                %span.text-lg.font-bold.text-sky-500.mr-3
-                                    =number_to_currency(product.price, unit: "PHP ")
-                            .star-rating{style: "--rating: #{product.average_rating}; --total-stars: 5;"}
-                                .stars-outer
-                                    .stars-inner
+        =turbo_frame_tag "products_frame" do
+            =render "products_listing", products: @products
             =paginate @products

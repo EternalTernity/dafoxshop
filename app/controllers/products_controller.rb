@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   def dafoxtech
   end
 
-  #put pages on all products per 5
+  # add a turbo frame so that every click on each category, the page never refresh. instead the products would refresh
   def adopisoft
     @products = Product.all
     @categories=Category.all
@@ -36,8 +36,17 @@ class ProductsController < ApplicationController
     end
 
     @products = @products.page(params[:page]).per(16)
+
+    # Turbo
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render partial: "products/products_listing",
+              locals: { products: @products }
+      end
+    end
   end
-  
+
   def search
     if params[:search_title].present?
       @products=Product.where("name ILIKE ?", "%#{params[:search_title]}%")
@@ -54,7 +63,6 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products=Product.all
-
   end
 
   # GET /products/1 or /products/1.json
