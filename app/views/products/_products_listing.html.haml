@@ -14,7 +14,7 @@
                     = image_tag(product.image_webp, class: "w-full h-48 object-cover")
                 .p-4 
                     %h2.text-sm.sm:text-base.font-semibold.text-gray-800.my-3
-                        =link_to product.name, product_path(product), class:"cursor-pointer", data: {turbo_frame: "_top"}
+                        =link_to product.name, product_path(product), class:"cursor-pointer hover:underline", data: {turbo_frame: "_top"}
                     %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
                     .flex.items-center
                         %span.text-lg.font-bold.text-sky-500.mr-3

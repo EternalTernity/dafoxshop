@@ -4,7 +4,6 @@ class ProductsController < ApplicationController
   def dafoxtech
   end
 
-  # add a turbo frame so that every click on each category, the page never refresh. instead the products would refresh
   def adopisoft
     @products = Product.all
     @categories=Category.all
@@ -35,7 +34,7 @@ class ProductsController < ApplicationController
       @products=@products.select { |product| product.average_rating >= params[:star].to_i }
     end
 
-    @products = @products.page(params[:page]).per(16)
+    @products = @products.page(params[:page]).per(12)
 
     # Turbo
     respond_to do |format|

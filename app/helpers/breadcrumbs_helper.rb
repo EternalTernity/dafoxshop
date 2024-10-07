@@ -6,7 +6,7 @@ module BreadcrumbsHelper
 
     # Build breadcrumb from category to root
     while category
-      crumbs << link_to(category.name, root_path)
+      crumbs << link_to(category.name, collections_adopisoft_path(category: category.name))
       category = category.parent_category # If you have a nested category setup
     end
 

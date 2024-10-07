@@ -11,29 +11,27 @@
         .mb-8.overflow-x-auto
             .flex.space-x-4
                 -@categories.each do |c|
-                    =link_to c.name, collections_adopisoft_path(category: c.name, price: params[:price], rating: params[:star]), data: {turbo_frame: "products_frame"}
-    
+                    =link_to c.name, collections_adopisoft_path(category: c.name, price: params[:price], rating: params[:star]), data: {turbo_frame: "products_frame"}, class: ("text-blue-600" if params[:category] == c.name)
     .flex.flex-col.md:flex-row.gap-8
         .w-full.md:w-64.flex-shrink-0
             %h2.text-xl.font-bold.mb-4.sm:text-2xl Filters
             .mb-6
                 =form_with url: collections_adopisoft_path, method: :get,data: {turbo_frame: "products_frame"}, local: true do |f|
                     %div
-                        =check_box_tag "price[]", 1, params[:price]&.include?("1")
+                        =check_box_tag "price[]", 1, params[:price]&.include?("1"), onchange: "this.form.requestSubmit()"
                         =f.label :price, "PHP 1000 - 3000"
                     %div
-                        =check_box_tag "price[]", 2, params[:price]&.include?("2")
+                        =check_box_tag "price[]", 2, params[:price]&.include?("2"), onchange: "this.form.requestSubmit()"
                         =f.label :price, "PHP 3001 - 5000"
                     %div
-                        =check_box_tag "price[]", 3, params[:price]&.include?("3")
+                        =check_box_tag "price[]", 3, params[:price]&.include?("3"), onchange: "this.form.requestSubmit()"
                         =f.label :price, "PHP 5001 - 7000"
                     %div
-                        =check_box_tag "price[]", 4, params[:price]&.include?("4")
+                        =check_box_tag "price[]", 4, params[:price]&.include?("4"), onchange: "this.form.requestSubmit()"
                         =f.label :price, "PHP 7001 - 9999"
                     %div
                         = select_tag :star, options_for_select((1..5).to_a.reverse.map { |n| ["#{n} Stars & Up", n] }, params[:star]), include_blank: 'All Ratings'
-                    %div
-                        =f.submit "Submit"
+                        
         =turbo_frame_tag "products_frame" do
             =render "products_listing", products: @products
             =paginate @products

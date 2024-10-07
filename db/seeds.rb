@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-
+puts "Creating categories..."
 Category.create!([
   { name: "Machine Accessories" },
   { name: "PCB Custom Boards" },
@@ -16,11 +16,14 @@ Category.create!([
   { name: "DIY Kits" },
   { name: "Ready-made Machines" }
 ])
+puts "Categories created."
 
+
+puts "Creating 20 products..."
 20.times do
-  product=Product.create name: Faker::Game.unique.title, description: Faker::Quote.unique.famous_last_words, price: Faker::Number.number(digits: 4), category_id: Faker::Number.number(digits: 1)
-  product.product_image.attach(io: File.open(Rails.root.join('db/images/prod01.png')),
-  filename: 'prod01.png')
+  product=Product.create! name: Faker::Game.unique.title, description: Faker::Quote.unique.famous_last_words, price: Faker::Number.number(digits: 4), category_id: Faker::Number.between(from:1, to:5)
+  product.product_image.attach(io: File.open(Rails.root.join('db/images/prod01.png')), filename: 'prod01.png')
 end
+puts "Products created."
 
 puts "Seedzing complerte. "
