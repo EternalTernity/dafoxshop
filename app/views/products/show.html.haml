@@ -9,8 +9,7 @@
               =image_tag var, class: "w-full aspect-square rounded-lg", onclick: "changeMainImage(this.src)"
         %div{class:"w-4/5"}
           .product-wrapper
-            -if @product.product_image.attached?
-              = image_tag(@product.image_webp, class: "w-full h-full object-cover", id: "mainImage")
+            = image_tag(@product.image_webp, class: "w-full h-full object-cover", id: "mainImage") if @product.product_image.attached?
     %div{class:"md:w-1/2"}
       .flex.justify-between.items-start
         %h1.text-3xl.font-bold.text-indigo-900 
@@ -41,20 +40,13 @@
     %div
       %h2.text-2xl.font-bold.mb-4 Write a review
       .bg-white.p-6.rounded-lg.shadow.border
-        .flex.justify-center.items-center
-          =form_with(model: [@product, @product.reviews.build], local:true) do |f|
-            .flex.flex-col.items-center.space-y-5
-              .flex.items-center.space-x-3
-                =f.label :subject
-                =f.text_field :subject, class: "border-b border-sky-500"
-              .flex.items-center.space-x-3
-                =f.label :content
-                =f.text_area :content
-              .flex.items-center.space-x-3
-                =f.label :star_rating
-                =f.select :star_rating, options_for_select(1..5), {}
-
-              =f.submit "Submit", class: "btn-cta"
+        =form_with(model: [@product, @product.reviews.build], local:true, class: "space-y-4") do |f|
+          .flex.items-center
+            =f.text_field :subject, placeholder: "Subject", class: "text-field"
+          .flex.items-center
+            =f.text_area :content, placeholder: "Content", class: "w-full min-h-[100px] border-transparent bg-secondary focus:ring-0"
+          .max-w-40.mx-auto
+            =f.submit "Submit", class: "btn-cta"
     %div
       .flex.justify-between.items-center.mb-4
         .text-2xl.font-bold 

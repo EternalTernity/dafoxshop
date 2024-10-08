@@ -21,8 +21,11 @@ puts "Categories created."
 
 puts "Creating 20 products..."
 20.times do
-  product=Product.create! name: Faker::Game.unique.title, description: Faker::Quote.unique.famous_last_words, price: Faker::Number.number(digits: 4), category_id: Faker::Number.between(from:1, to:5)
+  product=Product.create! name: Faker::Game.unique.title, description: Faker::Quote.unique.famous_last_words, price: Faker::Number.number(digits: 4), category_id: Faker::Number.between(from: 1, to: 5)
   product.product_image.attach(io: File.open(Rails.root.join('db/images/prod01.png')), filename: 'prod01.png')
+  product.product_variants.attach(io: File.open(Rails.root.join('db/images/prod01.png')), filename: 'prod01.png')
+  product.product_variants.attach(io: File.open(Rails.root.join('db/images/prod01.png')), filename: 'prod01.png')
+  product.product_variants.attach(io: File.open(Rails.root.join('db/images/prod01.png')), filename: 'prod01.png')
 end
 puts "Products created."
 

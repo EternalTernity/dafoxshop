@@ -9,9 +9,15 @@ class User < ApplicationRecord
   has_many :reviews
   has_many :likes
   has_many :replies
+
   after_initialize :set_default_role, if: :new_record?
+
   enum role: [ :user, :moderator, :admin ]
   def set_default_role
     self.role ||= :user
+  end
+
+  def image_webp
+    avatar.variant(format: "webp")
   end
 end

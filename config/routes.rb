@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "collections/dafoxtech", to: "products#dafoxtech"
   devise_for :users, controllers: { invitations: "devise/invitations" }
 
+  get "account", to: "accounts#details"
   resources :users do
     collection do
       post "invite", to: "users#invite"

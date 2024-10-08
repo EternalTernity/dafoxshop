@@ -79,7 +79,7 @@ body{
     }
     
     .form-field{
-        @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500
+        @apply w-full px-3 py-2 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500
     }
 
     .form-label{
@@ -97,6 +97,10 @@ body{
 
     .dafox-gradient{
         @apply bg-gradient-to-r from-[#d2fff8] via-[#fefbeb] to-[#f1cac2] overflow-hidden
+    }
+
+    .text-field{
+        @apply w-full border-t-0 border-x-0 border-b-2 rounded-none px-0 focus:ring-0
     }
 }
 

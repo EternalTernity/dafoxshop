@@ -37,13 +37,14 @@ class ProductsController < ApplicationController
     @products = @products.page(params[:page]).per(12)
 
     # Turbo
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render partial: "products/products_listing",
-              locals: { products: @products }
-      end
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.turbo_stream do
+    #     render turbo_stream:
+    #       turbo_stream.replace("products_frame", partial: "products/products_listing",
+    #       locals: { products: @products })
+    #   end
+    # end
   end
 
   def search

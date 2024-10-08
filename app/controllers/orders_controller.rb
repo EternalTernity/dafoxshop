@@ -54,6 +54,6 @@ class OrdersController < ApplicationController
 
   private
   def order_params
-    params.fetch(:order, {}).permit(:payment_method, :city, :province, :barangay, :zip_code, :street, :house_number, :first_name, :last_name, :phone_number, :email)
+    params.fetch(:order, {}).permit(:payment_method, :country, :city, :province, :barangay, :zip_code, :street, :house_number, :first_name, :last_name, :phone_number, :email)
   end
 end

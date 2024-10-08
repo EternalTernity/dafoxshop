@@ -8,7 +8,6 @@ export default class extends Controller {
   }
 
   autoSubmit(){
-    console.log("clicked")
     this.autoSubmitBtnTarget.click()
   }
 }

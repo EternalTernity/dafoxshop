@@ -4,9 +4,11 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
 
   validates :zip_code, :street, :house_number, presence: true
-  validates :province, presence: true
-  validates :city, presence: { if: ->(record) { record.states.present? } }
-  validates :barangay,  presence: { if: ->(record) { record.cities.present? } }
+  validates :country, presence: true
+  validates :province, inclusion: { in: ->(record) { record.provinces.keys }, allow_blank: true },
+             presence: { if: ->(record) { record.provinces.present? } }
+  validates :city, inclusion: { in: ->(record) { record.cities.keys }, allow_blank: true },
+              presence: { if: ->(record) { record.cities.present? } }
   validates :first_name, :last_name, :email, presence: true, unless: -> { user.present? }
   before_create :generate_token
 
@@ -15,23 +17,15 @@ class Order < ApplicationRecord
   end
 
   def countries
-    Luzvimin.regions
+    CS.countries.with_indifferent_access
   end
 
-  def states
-    Luzvimin.region(province).provinces
+  def provinces
+    CS.states(country).with_indifferent_access
   end
 
   def cities
-    Luzvimin.region(province).province(city).cities
-  end
-
-  def country_name
-    countries[country]
-  end
-
-  def state_name
-    states[state]
+    CS.cities(province, country)||[]
   end
 
   private

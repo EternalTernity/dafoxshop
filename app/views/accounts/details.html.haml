@@ -1,0 +1,8 @@
+-@options.each do |option|
+    %li
+        =link_to option, account_path(option: option), data: {turbo_frame: 'tab_pane'}
+%turbo-frame#tab_pane
+    =render "#{params[:option]&.downcase || 'account'}"
+
+=button_to "Log out", destroy_user_session_path, method: :delete
+

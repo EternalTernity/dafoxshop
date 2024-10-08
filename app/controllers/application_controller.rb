@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_cart
 
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path
+  end
+
   def current_cart
     if user_signed_in?
       if current_user.cart.nil?
