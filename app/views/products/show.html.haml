@@ -35,14 +35,17 @@
         =form_with url: add_to_cart_cart_path(@product), method: :post, class: "space-y-3" do
           =label_tag "Quantity"
           =number_field_tag :quantity, 1, min: 1, class: "rounded-lg"
-          =submit_tag "Add to cart", class: "btn-cta" 
+          =submit_tag "Add to cart", class: "btn-cta"
+        =button_to "Buy it", checkout_path(id: @product.id)
   .grid.md:grid-cols-2.gap-8.p-5
     %div
       %h2.text-2xl.font-bold.mb-4 Write a review
       .bg-white.p-6.rounded-lg.shadow.border
         =form_with(model: [@product, @product.reviews.build], local:true, class: "space-y-4") do |f|
-          .flex.items-center
+          .relative
             =f.text_field :subject, placeholder: "Subject", class: "text-field"
+            .absolute.bottom-0.left-0.w-full.h-2.bg-background
+              .absolute.bottom-0.left-0.w-full.h-full.border-b-2.border-primary.rounded-bl-md.rounded-br-md
           .flex.items-center
             =f.text_area :content, placeholder: "Content", class: "w-full min-h-[100px] border-transparent bg-secondary focus:ring-0"
           .max-w-40.mx-auto

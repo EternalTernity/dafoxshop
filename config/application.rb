@@ -23,5 +23,6 @@ module Shop
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.action_mailer.default_url_options = { host: "http://127.0.0.1:3000" }
   end
 end

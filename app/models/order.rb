@@ -7,8 +7,7 @@ class Order < ApplicationRecord
   validates :country, presence: true
   validates :province, inclusion: { in: ->(record) { record.provinces.keys }, allow_blank: true },
              presence: { if: ->(record) { record.provinces.present? } }
-  validates :city, inclusion: { in: ->(record) { record.cities.keys }, allow_blank: true },
-              presence: { if: ->(record) { record.cities.present? } }
+  validates :city, presence: { if: ->(record) { record.cities.present? } }
   validates :first_name, :last_name, :email, presence: true, unless: -> { user.present? }
   before_create :generate_token
 

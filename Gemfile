@@ -97,3 +97,6 @@ gem "faker", "~> 3.4"
 gem "open-uri", "~> 0.4.1"
 
 gem "unsplash_image", "~> 0.1.1"
+
+gem "stripe", "~> 13.0"
+gem "pay", "~> 8.1"

@@ -100,7 +100,7 @@ body{
     }
 
     .text-field{
-        @apply w-full border-t-0 border-x-0 border-b-2 rounded-none px-0 focus:ring-0
+        @apply w-full border-t-0 border-x-0 border-transparent border-b-2 rounded-none px-0 focus:ring-0 bg-transparent
     }
 }
 

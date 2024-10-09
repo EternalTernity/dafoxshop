@@ -4,11 +4,13 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { invitations: "devise/invitations" }
 
   get "account", to: "accounts#details"
+
   resources :users do
     collection do
       post "invite", to: "users#invite"
     end
   end
+
   resource :cart, only: [ :show ] do
     post "add_to_cart/:product_id", to: "carts#add_to_cart", as: :add_to_cart
     delete "remove_from_cart/:id", to: "carts#remove_from_cart", as: :remove_from_cart
@@ -31,6 +33,7 @@ Rails.application.routes.draw do
       get "list_barangays"
     end
   end
+
   get "orders/:id", to: "orders#show", as: :guest_order
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -54,4 +57,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  post "checkout", to: "checkout#create"
 end
