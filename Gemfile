@@ -100,3 +100,4 @@ gem "unsplash_image", "~> 0.1.1"
 
 gem "stripe", "~> 13.0"
 gem "pay", "~> 8.1"
+

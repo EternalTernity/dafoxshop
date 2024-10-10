@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
   get "collections/adopisoft", to: "products#adopisoft"
   get "collections/dafoxtech", to: "products#dafoxtech"
-  devise_for :users, controllers: { invitations: "devise/invitations" }
+  devise_for :users, controllers: {
+    invitations: "devise/invitations",
+    confirmations: "devise/confirmations"
+  }
 
-  get "account", to: "accounts#details"
+  resource :account, only: [:edit] do
+    get "details", to: "accounts#details"
+    collection do
+      patch :update_password
+    end
+  end
 
   resources :users do
     collection do

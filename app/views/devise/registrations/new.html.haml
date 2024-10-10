@@ -1,8 +1,7 @@
-.flex-grow.flex.items-center.justify-center.py-8.px-4.sm:px-6.lg:px-8
+.flex-grow.flex.items-center.justify-center.py-8.px-4{class: "sm:px-6 lg:px-8"}
   .max-w-md.w-full
     %div
       %h2.mt-6.text-center.text-3xl.font-extrabold.text-gray-900.uppercase create account
-      
       = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
         -resource.errors.each do |err|
           .bg-red-50.text-red-500.px-3.py-2.font-medium.rounded-lg.mt-3
@@ -31,5 +30,5 @@
             =f.file_field :avatar
           .max-w-40.mx-auto
             = f.submit "Create", class: "btn-cta"
-          .text-center.text-sm.hover:underline
+          .text-center.text-sm
             =render "devise/shared/links"

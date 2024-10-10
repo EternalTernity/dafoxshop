@@ -1,1 +1,16 @@
-=@user.email
+=form_for(user, url: {action: "update_password"}, data: {turbo_frame: "_top"}) do |f|
+  .space-y-2
+    %div
+      =f.label :email
+      =f.email_field :email, class: "form-field"
+    %div
+      =f.label "OLD PASSWORD"
+      =f.password_field :current_password, class: "form-field"
+    %div
+      =f.label "NEW PASSWORD"
+      =f.password_field :password, class: "form-field"
+    %div
+      =f.label "REPEAT NEW PASSWORD"
+      =f.password_field :password_confirmation, class: "form-field"
+    .max-w-40.mx-auto
+      =f.submit  "Save changes", class: "btn-cta"

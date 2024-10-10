@@ -7,8 +7,12 @@
                         =image_tag @user.image_webp, class: "w-20 h-20 rounded-full" if @user.avatar.attached?
                 %nav.space-y-2.flex.flex-col
                     -@options.each do |option|
-                        =link_to option, account_path(option: option), data: {turbo_frame: 'tab_pane'}, class: "hover:text-sky-500 #{'text-sky-500' if params[:option] == option}"
+                        =link_to option, details_account_path(option: option), data: {turbo_frame: 'tab_pane'}, class: "hover:text-sky-500 #{'text-sky-500' if params[:option] == option}"
+
                     =button_to "Log out", destroy_user_session_path, method: :delete
             .p-6
                 %turbo-frame#tab_pane
-                    =render "#{params[:option]&.downcase || 'account'}"
+                    - if params[:option] == "Account" || params[:option].nil?
+                        =render "account", user: @user
+                    - else
+                        =render "#{params[:option]&.downcase || 'account'}"

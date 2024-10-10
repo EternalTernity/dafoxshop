@@ -1,23 +1,24 @@
-.flex-grow.flex.items-center.justify-center.py-8.px-4.sm:px-6.lg:px-8
+.flex-grow.flex.items-center.justify-center.py-8.px-4{class: "sm:px-6 lg:px-8"}
   .max-w-md.w-full
     %div
       %h2.mt-6.text-center.text-3xl.font-extrabold.text-gray-900.uppercase login
-    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-      -resource.errors.each do |err|
-        .bg-red-50.text-red-500.px-3.py-2.font-medium.rounded-lg.mt-3
-          = err.full_message
-      .space-y-2
-        %div
-          =f.label :email
-          =f.email_field :email,autofocus: true, autocomplete: "email",class: "form-field", value: params[:email]
-        %div
-          = f.label :password
-          = f.password_field :password, autocomplete: "current-password",class:"form-field"
-        -if devise_mapping.rememberable?
-          %div.flex.items-center
-            =f.check_box :remember_me, class: "mr-[0.5rem]"
-            =f.label :remember_me
-        %div.max-w-40.mx-auto
-          =f.submit "Login", class: "btn-cta"
-        .text-center.text-sm.hover:underline
-          =link_to "Create account", new_user_registration_path
+      %p.text-green-500.font-medium.rounded-lg.inline-block= notice
+      %p.text-red-500.font-medium.rounded-lg= alert
+      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+
+        .space-y-2
+          %div
+            =f.label :email
+            =f.email_field :email,autofocus: true, autocomplete: "email",class: "form-field", value: params[:email]
+          %div
+            = f.label :password
+            = f.password_field :password, autocomplete: "current-password",class:"form-field"
+
+          -if devise_mapping.rememberable?
+            %div.flex.items-center
+              =f.check_box :remember_me, class: "mr-[0.5rem]"
+              =f.label :remember_me
+          %div.max-w-40.mx-auto
+            =f.submit "Login", class: "btn-cta"
+          .text-center.text-sm.hover:underline
+            =link_to "Create account", new_user_registration_path
