@@ -3,9 +3,10 @@
     %div
       %h2.mt-6.text-center.text-3xl.font-extrabold.text-gray-900.uppercase create account
       = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-        -resource.errors.each do |err|
-          .bg-red-50.text-red-500.px-3.py-2.font-medium.rounded-lg.mt-3
-            = err.full_message
+        %div{"data-controller": "autohide"}
+          -resource.errors.each do |err|
+            .bg-red-50.text-red-500.px-3.py-2.font-medium.rounded-lg.mt-3
+              = err.full_message
         .space-y-2
           %div
             = f.label :first_name

@@ -1,11 +1,11 @@
+%div{"data-controller": "autohide"}
+  %p.text-green-500.font-medium.rounded-lg.inline-block= notice if notice.present?
+  %p.text-red-500.font-medium.rounded-lg.absolute.right-5= alert if alert.present?
 .flex-grow.flex.items-center.justify-center.py-8.px-4{class: "sm:px-6 lg:px-8"}
   .max-w-md.w-full
     %div
       %h2.mt-6.text-center.text-3xl.font-extrabold.text-gray-900.uppercase login
-      %p.text-green-500.font-medium.rounded-lg.inline-block= notice
-      %p.text-red-500.font-medium.rounded-lg= alert
       = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-
         .space-y-2
           %div
             =f.label :email

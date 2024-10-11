@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_09_034145) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_11_053743) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,22 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_034145) do
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
     t.index ["blob_id"], name: "index_active_storage_variant_records_on_blob_id"
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "country"
+    t.string "city"
+    t.string "province"
+    t.string "barangay"
+    t.integer "zip_code"
+    t.string "street"
+    t.integer "house_number"
+    t.bigint "order_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_addresses_on_order_id"
+    t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
   create_table "cart_items", force: :cascade do |t|
@@ -107,18 +123,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_034145) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "payment_method"
-    t.string "city"
-    t.string "province"
-    t.string "barangay"
-    t.integer "zip_code"
-    t.string "street"
-    t.string "house_number"
     t.string "token"
     t.string "first_name"
     t.string "last_name"
     t.integer "phone_number"
     t.string "email"
     t.string "password"
+    t.string "city"
+    t.string "province"
+    t.string "barangay"
+    t.integer "zip_code"
+    t.string "street"
+    t.string "house_number"
     t.string "country"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -295,6 +311,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_034145) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "orders"
+  add_foreign_key "addresses", "users"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "users"
