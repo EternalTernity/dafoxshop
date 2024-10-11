@@ -1,13 +1,13 @@
 class AccountsController < ApplicationController
   def details
     @user=current_user
+    @addresses=current_user.addresses
     @options = %w[Account Address Orders Wishlist]
   end
 
   def edit
     @user=current_user
   end
-
   def update_password
     @user=current_user
     if @user.update_with_password(update_params)

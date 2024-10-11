@@ -12,6 +12,8 @@
                     =button_to "Log out", destroy_user_session_path, method: :delete
             .p-6
                 %turbo-frame#tab_pane
+                    %h2.text-2xl.font-bold= params[:option] || "Account"
+                    %hr.h-px.my-4.bg-gray-200.border-0
                     - if params[:option] == "Account" || params[:option].nil?
                         =render "account", user: @user
                     - else

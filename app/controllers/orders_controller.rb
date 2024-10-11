@@ -1,8 +1,10 @@
+#add user_id in the database
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [ :show ], unless: -> { params[:email].present? }
   before_action :check_total_price, only: [ :new ]
   def new
     @order=Order.new order_params
+    @order.build_address
   end
 
   def create
@@ -29,7 +31,6 @@ class OrdersController < ApplicationController
         redirect_to guest_order_path(@order.token, email: @order.email)
       end
     else
-      puts @order.errors.full_messages
       render :new
     end
   end
@@ -54,6 +55,8 @@ class OrdersController < ApplicationController
 
   private
   def order_params
-    params.fetch(:order, {}).permit(:payment_method, :country, :city, :province, :barangay, :zip_code, :street, :house_number, :first_name, :last_name, :phone_number, :email)
+    params.fetch(:order, {}).permit(:payment_method, :first_name, :last_name, :phone_number, :email, :country, :city, :province,
+                                    address_attributes: [ :barangay, :zip_code, :street, :house_number]
+                                    )
   end
 end

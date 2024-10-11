@@ -13,6 +13,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :address, only: [:edit] do
+    collection do
+      patch :update_address
+    end
+  end
+
   resources :users do
     collection do
       post "invite", to: "users#invite"

@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :reviews
   has_many :likes
   has_many :replies
-
+  has_many :addresses
   after_initialize :set_default_role, if: :new_record?
 
   enum role: [ :user, :moderator, :admin ]
