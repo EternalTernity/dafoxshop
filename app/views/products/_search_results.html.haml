@@ -1,5 +1,7 @@
-.flex.flex-col
-    -products.each do |product|
-        %li
-            =product.price
-            = link_to highlight(product.name, params[:search_title]), product
+-if products.present?
+    .relative.mx-4
+        .absolute.z-10.mt-2.bg-white.rounded-md.shadow-lg.w-full
+            .py-2.overflow-auto.max-h-72
+                -products.each do |product|
+                    %li.px-4.py-2.hover:bg-gray-100.cursor-pointer.list-none
+                        =link_to product.name, product_path(product)

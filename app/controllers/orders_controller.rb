@@ -1,4 +1,3 @@
-#add user_id in the database
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [ :show ], unless: -> { params[:email].present? }
   before_action :check_total_price, only: [ :new ]

@@ -5,6 +5,7 @@ class Admin::ProductsController < AdminController
   # GET /admin/products or /admin/products.json
   def index
     @admin_products=Product.all
+    @admin_products=@admin_products.page(params[:page]).per(6)
   end
 
   # GET /admin/products/1 or /admin/products/1.json

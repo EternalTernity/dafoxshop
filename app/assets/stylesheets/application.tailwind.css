@@ -99,6 +99,10 @@ body{
         @apply bg-gradient-to-r from-[#d2fff8] via-[#fefbeb] to-[#f1cac2] overflow-hidden
     }
 
+    .blue-gradient{
+        @apply bg-gradient-to-r from-[#231ba1] to-[#0f0871]
+    }
+
     .text-field{
         @apply w-full border-t-0 border-x-0 border-transparent border-b-2 rounded-none px-0 focus:ring-0 bg-transparent
     }

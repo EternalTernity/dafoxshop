@@ -8,9 +8,12 @@
             =image_tag("ado-banner-2.png")
 .container.mx-auto.px-4.py-8
     .mb-8.overflow-x-auto
-        .flex.space-x-4
+        .flex.space-x-4.justify-center
             -@categories.each do |c|
-                =link_to c.name, collections_adopisoft_path(category: c.name, price: params[:price], rating: params[:star])
+                =link_to collections_adopisoft_path(category: c.name, price: params[:price], rating: params[:star]), class: "category-tab-wrapper" do
+                    .flex.flex-col.justify-center.items-center
+                        =image_tag("diy1.png", class: "w-1/2")
+                        %span= c.name
     .flex.flex-col.md:flex-row.gap-8
         .w-full.md:w-64.flex-shrink-0
             %h2.text-xl.font-bold.mb-4.sm:text-2xl Filters
@@ -43,16 +46,18 @@
                 - @products.each do |product|
                     .overflow-hidden
                         .relative
-                        - if product.product_image.attached?
-                            = image_tag(product.image_webp, class: "w-full h-48 object-cover")
-                        .p-4 
-                            %h2.text-sm.sm:text-base.font-semibold.text-gray-800.my-3
-                                =link_to product.name, product_path(product), class:"cursor-pointer hover:underline", data: {turbo_frame: "_top"}
-                            %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
-                            .flex.items-center
-                                %span.text-lg.font-bold.text-sky-500.mr-3
-                                    =number_to_currency(product.price, unit: "PHP ")
-                            .star-rating{style: "--rating: #{product.average_rating}; --total-stars: 5;"}
-                                .stars-outer
-                                    .stars-inner
-                =paginate @products
+                            =link_to product_path(product), class: "cursor-pointer", data: {turbo_frame: "_top"} do
+                                - if product.product_image.attached?
+                                    = image_tag(product.image_webp, class: "w-full h-48 object-cover")
+                                .p-4
+                                    %h2.text-sm.sm:text-base.font-semibold.text-gray-800.my-3
+                                        =product.name
+                                    %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
+                                    .flex.items-center
+                                        %span.text-lg.font-bold.text-sky-500.mr-3
+                                            =number_to_currency(product.price, unit: "PHP ")
+                                    .star-rating{style: "--rating: #{product.average_rating}; --total-stars: 5;"}
+                                        .stars-outer
+                                            .stars-inner
+
+            =paginate @products

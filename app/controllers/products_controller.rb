@@ -49,7 +49,7 @@ class ProductsController < ApplicationController
 
   def search
     if params[:search_title].present?
-      @products=Product.where("name ILIKE ?", "%#{params[:search_title]}%")
+      @products=Product.where("name ILIKE ?", "%#{params[:search_title]}%").order(created_at: :desc)
     else
       @products=[]
     end

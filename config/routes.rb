@@ -60,14 +60,20 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  root "products#index"
+  root "home#index"
 
   namespace :admin do
-    get "/" => "home#index"
+    get "/", to: "home#index"
     resources :products
     resources :reviews do
       member do
         patch :is_published
+      end
+    end
+
+    resource :orders, only:[:index] do
+      collection do
+        get "/", to: "orders#index"
       end
     end
   end

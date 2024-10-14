@@ -1,19 +1,56 @@
 
 #default-carousel.relative.w-full{"data-carousel" => "slide"}
   / Carousel wrapper
-  .relative.h-56.overflow-hidden.rounded-lg.md:h-96
+  .relative.min-h-screen.overflow-hidden
     / Item 1
     .hidden.duration-700.ease-in-out{"data-carousel-item" => ""}
-      = image_tag asset_url("dafox.png"),class:"absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+      .adopisoft-gradient
+        .max-w-6xl.mx-auto.px-4.pt-8.md:pt-12.flex.flex-col.lg:flex-row.items-center
+          %div{class: "md:w-1/2 mb-8 md:mb-0"}
+            =image_tag("ado-logo.png", class: "mb-4")
+            %h2.text-3xl.md:text-4xl.font-bold.mb-4 Enjoy Up to 20% Off on Your First Purchase!
+            %p.text-lg.mb-6 For a Seamless & Hassle-FREE eLoading services, Gcash, Maya Cash-in and Bills Payment.
+            =link_to "Shop Now", collections_adopisoft_path, class: "btn-cta"
+          %div{class: "md:w-1/2 relative"}
+            =image_tag("ado-banner.png")
     / Item 2
     .hidden.duration-700.ease-in-out{"data-carousel-item" => ""}
-      %img.absolute.block.w-full{:alt => "...", :class => "-translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", :src => "/docs/images/carousel/carousel-2.svg"}/
-  / Slider indicators
-  .absolute.z-30.flex.bottom-5.space-x-3.rtl:space-x-reverse{:class => "-translate-x-1/2 left-1/2"}
+      .dafox-gradient
+        .max-w-6xl.mx-auto.px-4.pt-8.md:pt-12.flex.flex-col.lg:flex-row.items-center
+          %div{class: "md:w-1/2 mb-8 md:mb-0"}
+            =image_tag("dafox.png", class: "mb-4")
+            %h2.text-3xl.md:text-4xl.font-bold.mb-4 Enjoy Up to 20% Off on Your First Purchase!
+            %p.text-lg.mb-6 For a Seamless & Hassle-FREE eLoading services, Gcash, Maya Cash-in and Bills Payment.
+            =link_to "Shop Now", collections_dafoxtech_path, class: "btn-cta"
+          %div{class: "md:w-1/2 relative"}
+            =image_tag("atf-img.png")
+  .absolute.z-30.flex.space-x-3{class: "-translate-x-1/2 left-1/2 bottom-[13.5rem]"}
     %button.w-3.h-3.rounded-full{"aria-current" => "true", "aria-label" => "Slide 1", "data-carousel-slide-to" => "0", :type => "button"}
     %button.w-3.h-3.rounded-full{"aria-current" => "false", "aria-label" => "Slide 2", "data-carousel-slide-to" => "1", :type => "button"}
 
-
-
-
-                        
+.max-w-6xl.mx-auto.p-2
+  .flex.flex-row.space-x-3
+    %div{class: "w-1/2"}
+      .space-y-3
+        .adopisoft-gradient.flex.items-center.text-white.rounded-lg{class: "min-h-[237px]"}
+          .flex.flex-column.items-center.lg:flex-row.p-5
+            %div
+              =image_tag("cta1.png")
+            %div
+              %h3.text-center.font-bold.text-3xl The Most Reliable Peso WiFi Hotspot
+              .text-center.py-3
+                =link_to "Shop Now", collections_adopisoft_path, class: "btn-cta"
+        .dafox-gradient.flex.items-center.rounded-lg.text-black{class: "min-h-[237px]"}
+          .flex.flex-column.items-center.lg:flex-row.p-5
+            %div
+              %h3.text-center.font-bold.text-3xl The Most Reliable Peso WiFi Hotspot
+              .text-center.py-3
+                =link_to "Shop Now", collections_adopisoft_path, class: "btn-cta"
+            %div
+              =image_tag("cta2.png")
+    %div{class: "w-1/2"}
+      .blue-gradient.relative.flex.items-center.rounded-lg{class: "min-h-[495px]"}
+        =image_tag("cta3.png",class: "absolute bottom-0")
+        .p-5.absolute.top-0
+          %h3.text-center.text-white.font-bold.text-3xl Check out Our Ready Made Machines
+          =link_to "Shop Now", collections_adopisoft_path(category: "Ready-made Machines"), class: "btn-cta"
