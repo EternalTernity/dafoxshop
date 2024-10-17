@@ -1,20 +1,24 @@
-.min-h-screen.py-8
+.min-h-screen.p-8
     .mx-auto.max-w-7xl
         %div{class: "grid gap-8 md:grid-cols-[300px_1fr]"}
-            .card-wrapper
+            .card-wrapper.h-fit
                 .mb-6.text-center
                     .inline-block
                         =image_tag @user.image_webp, class: "w-20 h-20 rounded-full" if @user.avatar.attached?
-                %nav.space-y-2.flex.flex-col
+                %div.space-y-4.flex.flex-col
                     -@options.each do |option|
-                        =link_to option, details_account_path(option: option), data: {turbo_frame: 'tab_pane'}, class: "hover:text-sky-500 #{'text-sky-500' if params[:option] == option}"
+                        =link_to option, details_account_path(option: option),class: "hover:text-sky-500 #{'text-black font-bold border-b-2 border-black' if params[:option] == option}"
 
                     =button_to "Log out", destroy_user_session_path, method: :delete
             .p-6
-                %turbo-frame#tab_pane
-                    %h2.text-2xl.font-bold= params[:option] || "Account"
-                    %hr.h-px.my-4.bg-gray-200.border-0
-                    - if params[:option] == "Account" || params[:option].nil?
-                        =render "account", user: @user
-                    - else
-                        =render "#{params[:option]&.downcase || 'account'}"
+                %h2.text-2xl.font-bold.pb-5= params[:option] || "Account"
+                - if params[:option] == "Account" || params[:option].nil?
+                    =render "account", user: @user
+                -elsif params[:option] == "Wishlist" || params[:option].nil?
+                    =render "wishlist", wishlists: @wishlists
+                -elsif params[:option] == "Address" || params[:option].nil?
+                    =render "address", addresses: @addresses
+                -elsif params[:option] == "Orders" || params[:option].nil?
+                    =render "orders", orders: @orders
+                - else
+                    =render "#{params[:option]&.downcase || 'account'}"

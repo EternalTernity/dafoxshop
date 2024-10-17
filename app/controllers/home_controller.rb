@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @products = Product.all
+    @recent_products = Product.order(created_at: :desc).limit(10)
   end
 
   # GET /products/1 or /products/1.json

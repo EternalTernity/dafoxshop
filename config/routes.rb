@@ -6,14 +6,16 @@ Rails.application.routes.draw do
     confirmations: "devise/confirmations"
   }
 
-  resource :account, only: [:edit] do
+  resource :account, only: [:edit, :update_password, :details] do
     get "details", to: "accounts#details"
     collection do
       patch :update_password
     end
+    post "wishlist", action: :create, on: :collection
+    delete "wishlist/:product_id", action: :destroy, on: :collection, as: "remove_wishlist"
   end
 
-  resource :address, only: [:edit] do
+  resources :address, only: [:edit] do
     collection do
       patch :update_address
     end

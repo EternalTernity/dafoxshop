@@ -1,17 +1,13 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
-
   def dafoxtech
-  end
-
-  def adopisoft
-    @products = Product.all
+    @products = Product.where(classification: "DafoxTech")
     @categories=Category.all
 
     # Filter by category
     if params[:category].present?
       @cat=Category.find_by_name(params[:category])
-      @products=@cat.products
+      @products=@cat.products.where(classification: "DafoxTech")
     else
       @products = Product.all
     end
@@ -34,7 +30,50 @@ class ProductsController < ApplicationController
       @products=@products.select { |product| product.average_rating >= params[:star].to_i }
     end
 
-    @products = @products.page(params[:page]).per(12)
+    @products = Kaminari.paginate_array(@products).page(params[:page]).per(12)
+
+    # Turbo
+    # respond_to do |format|
+    #   format.html
+    #   format.turbo_stream do
+    #     render turbo_stream:
+    #       turbo_stream.replace("products_frame", partial: "products/products_listing",
+    #       locals: { products: @products })
+    #   end
+    # end
+  end
+
+  def adopisoft
+    @products = Product.where(classification: "AdopiSoft")
+    @categories=Category.all
+
+    # Filter by category
+    if params[:category].present?
+      @cat=Category.find_by_name(params[:category])
+      @products=@cat.products.where(classification: "AdopiSoft")
+    else
+      @products = Product.all
+    end
+
+    # Filter by price
+    if params[:price].present?
+      selected_prices=params[:price].map(&:to_i)
+      price_ranges={
+        1 => 1000..3000,
+        2 => 3001..5000,
+        3 => 5001..7000,
+        4 => 7001..9999
+      }
+
+      ranges=selected_prices.map { |price|price_ranges[price] }.compact
+      @products=@products.where(price: ranges) unless ranges.empty?
+    end
+    # Filter by star
+    if params[:star].present?
+      @products=@products.select { |product| product.average_rating >= params[:star].to_i }
+    end
+
+    @products = Kaminari.paginate_array(@products).page(params[:page]).per(12)
 
     # Turbo
     # respond_to do |format|

@@ -71,7 +71,7 @@ body{
     }
 
     .btn-cta {
-        @apply w-full bg-[linear-gradient(180deg,#00EFFE,#0095FF)] text-white min-w-[140px] text-base font-black px-5 py-[13px] border-0 hover:bg-[linear-gradient(180deg,#0095FF,#00EFFE)] rounded-lg hover:shadow-lg shadow-sm cursor-pointer transition ease-in-out delay-150 duration-300;
+        @apply bg-[linear-gradient(180deg,#00EFFE,#0095FF)] text-white text-base font-black px-5 py-[13px] border-0 hover:bg-[linear-gradient(180deg,#0095FF,#00EFFE)] rounded-lg hover:shadow-lg shadow-sm cursor-pointer transition ease-in-out delay-150 duration-300;
     }
 
     .thumbnail-wrapper {
@@ -87,7 +87,7 @@ body{
     }
 
     .category-tab-wrapper{
-        @apply w-[220px] shadow-[#b9b9b966_0px_0px_20px] h-[190px] rounded-[20px] border-0 border-[3px] border-solid border-white;
+        @apply w-[220px] shadow-[#b9b9b966_0px_0px_20px] py-5 rounded-[20px] border-0 border-[3px] border-solid border-white;
         background: #ecf1f3;
     }
 
@@ -101,6 +101,14 @@ body{
 
     .blue-gradient{
         @apply bg-gradient-to-r from-[#231ba1] to-[#0f0871]
+    }
+
+    .dark-blue-gradient{
+        @apply bg-gradient-to-bl from-[#151062] to-[#06032c]
+    }
+
+    .sky-blue-gradient{
+        @apply bg-gradient-to-b from-[#00effe] to-[#0095ff]
     }
 
     .text-field{

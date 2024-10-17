@@ -13,7 +13,6 @@
     %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
     %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
     %script{src: "https://js.stripe.com/v3/"}
-    %script{src: "https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"}
     = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css", media: "all"
 
     = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
@@ -32,6 +31,7 @@
         %a.text-sm.text-white.hover:underline{:href => "#"}
           = icon('fa-solid', 'location-dot',class:"text-[#BBB6FF]")
           %span.pl-2 Track Order
+      %hr.h-px.border-0{class: "bg-white/20"}
       .flex.flex-wrap.justify-between.items-center.max-w-screen-2xl.mx-auto.p-4.py-3
         .flex.item-center.justify-start.space-x-5
           = image_tag asset_url("flarego-shop-logo.png")
@@ -47,7 +47,8 @@
             = icon('fa-solid', 'user',class:"text-[#BBB6FF]")
             =link_to "Sign In", new_user_session_path,class: "pr-3"  
           = icon('fa-solid', 'heart',class:"text-[#BBB6FF]")
-          = link_to "Wishlist",root_path,class:"pr-3"
+          //make this link a turbo frame
+          = link_to "Wishlist",details_account_path(option: "Wishlist"),class:"pr-3", data:{turbo_frame: 'tab_pane'}
           = icon('fa-solid', 'cart-shopping',class:"text-[#BBB6FF]")
     
           = link_to "Cart",cart_path,class:"pr-3"
@@ -67,9 +68,9 @@
           = link_to "30 Days Free Return",root_path
     %div#search_results
     = yield
-    %footer.text-white.py-12{:class => "bg-[#06032C] mt-[15%]"}
-      .container.mx-auto.px-4
-        .grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-4.gap-8
+    %footer.text-white{:class => "bg-[#06032C] mt-[15%]"}
+      .container.mx-auto.px-4.py-12
+        .grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-8
           %div
             .flex.items-center.mb-4
               = link_to image_tag("flarego-shop-logo.png"), root_path
@@ -94,7 +95,14 @@
                       =link_to i, root_path, class: "hover:text-cyan-400 transition-colors"  
           %div
             %h3.text-lg.font-semibold.mb-4 Newsletter
-            -# fix this code to create a new invitation
-            =form_with model: User, url: user_invitation_path, local: true do |f|      
-              =f.text_field :email
-              =f.submit "sub"
+            =form_with model: User, url: user_invitation_path, class: "space-y-2", local: true do |f|
+              =f.text_field :email, class: "form-field text-black"
+              .flex.items-center.justify-end
+                =f.submit "Submit", class: "btn-cta"
+      %hr.h-px.mt-5.border-0{class: "bg-white/20"}
+      .container.mx-auto.py-3
+        .flex.flex-col.md:flex-row.items-center.justify-between
+          %p.text-sm.font-bold.text-gray-500 © 2024, Flarego Online Store. Powered by Shopify
+          %div.flex.flex-row.space-x-5
+            %p.text-sm.text-gray-500 We accept payments via
+            =image_tag("payment-gateway.png")

@@ -19,6 +19,7 @@ class Product < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+
   def image_webp
     product_image.variant(format: "webp")
   end

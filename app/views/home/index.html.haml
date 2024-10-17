@@ -1,9 +1,10 @@
 
-#default-carousel.relative.w-full{"data-carousel" => "slide"}
+#default-carousel.relative.w-full{"data-carousel": "slide"}
   / Carousel wrapper
-  .relative.min-h-screen.overflow-hidden
+  .relative.overflow-hidden.min-h-screen
+
     / Item 1
-    .hidden.duration-700.ease-in-out{"data-carousel-item" => ""}
+    .hidden.duration-1000.ease-in-out{"data-carousel-item": ""}
       .adopisoft-gradient
         .max-w-6xl.mx-auto.px-4.pt-8.md:pt-12.flex.flex-col.lg:flex-row.items-center
           %div{class: "md:w-1/2 mb-8 md:mb-0"}
@@ -14,7 +15,7 @@
           %div{class: "md:w-1/2 relative"}
             =image_tag("ado-banner.png")
     / Item 2
-    .hidden.duration-700.ease-in-out{"data-carousel-item" => ""}
+    .hidden.duration-1000.ease-in-out{"data-carousel-item" => ""}
       .dafox-gradient
         .max-w-6xl.mx-auto.px-4.pt-8.md:pt-12.flex.flex-col.lg:flex-row.items-center
           %div{class: "md:w-1/2 mb-8 md:mb-0"}
@@ -24,9 +25,9 @@
             =link_to "Shop Now", collections_dafoxtech_path, class: "btn-cta"
           %div{class: "md:w-1/2 relative"}
             =image_tag("atf-img.png")
-  .absolute.z-30.flex.space-x-3{class: "-translate-x-1/2 left-1/2 bottom-[13.5rem]"}
-    %button.w-3.h-3.rounded-full{"aria-current" => "true", "aria-label" => "Slide 1", "data-carousel-slide-to" => "0", :type => "button"}
-    %button.w-3.h-3.rounded-full{"aria-current" => "false", "aria-label" => "Slide 2", "data-carousel-slide-to" => "1", :type => "button"}
+    .absolute.z-30.flex.space-x-3{class: "-translate-x-1/2 left-1/2 bottom-0"}
+      %button.w-3.h-3.rounded-full{"aria-current" => "true", "aria-label" => "Slide 1", "data-carousel-slide-to" => "0", :type => "button"}
+      %button.w-3.h-3.rounded-full{"aria-current" => "false", "aria-label" => "Slide 2", "data-carousel-slide-to" => "1", :type => "button"}
 
 .max-w-6xl.mx-auto.p-2
   .flex.flex-row.space-x-3
@@ -45,7 +46,7 @@
             %div
               %h3.text-center.font-bold.text-3xl The Most Reliable Peso WiFi Hotspot
               .text-center.py-3
-                =link_to "Shop Now", collections_adopisoft_path, class: "btn-cta"
+                =link_to "Shop Now", collections_dafoxtech_path, class: "btn-cta"
             %div
               =image_tag("cta2.png")
     %div{class: "w-1/2"}
@@ -54,3 +55,72 @@
         .p-5.absolute.top-0
           %h3.text-center.text-white.font-bold.text-3xl Check out Our Ready Made Machines
           =link_to "Shop Now", collections_adopisoft_path(category: "Ready-made Machines"), class: "btn-cta"
+
+.dark-blue-gradient.text-white.flex.flex-col.my-8.md:flex-row.items-center.justify-between
+  .max-w-2xl.mx-auto.mb-8.md:mb-0.md:mr-8.px-5
+    %h1.text-3xl.md:text-4xl.lg:text-5xl.font-bold.mb-4 All New DafoxTech PCB Custom Board!
+    %p.text-lg.mb-6 For a Seamless | Hassle-FREE eLoading services, Gcash, Maya Cash-In and Bills Payment.
+    .flex.flex-col.md:flex-row.gap-4.justify-start
+      =link_to "Shop Now!", collections_dafoxtech_path(category: "PCB Custom Boards"), class: "btn-cta text-center"
+  .relative.w-full{class: "md:w-1/2"}
+    =image_tag("cta-img.png", class: "mt-5")
+
+.max-w-6xl.mx-auto.px-4.space-y-2
+  %div
+    %div{"data-carousel": "slide", class: "relative"}
+      .flex.justify-between.items-center
+        %h2.text-2xl.font-bold.my-4 Recently Added Products
+        %div.flex.gap-4
+          %button.flex.items-center.justify-center{"data-carousel-prev": ""}
+            =icon("fa-solid", "arrow-left")
+          %button.flex.items-center.justify-center{"data-carousel-next": ""}
+            =icon("fa-solid", "arrow-right")
+      %div{"class": "relative h-96 overflow-hidden rounded-lg"}
+        %div{"class": "hidden duration-1000 ease-in-out", "data-carousel-item": ""}
+          .grid.grid-cols-4.gap-4
+            - @recent_products.first(4).each do |product|
+              .flex.flex-col
+                .bg-gray-100.rounded-lg.shadow
+                  .relative
+                    = image_tag(product.image_webp, class: "w-96 h-auto")
+                    .absolute.top-2.right-2
+                      = icon('fa-regular', 'eye')
+                    .absolute.top-8.right-2
+                      =button_to wishlist_account_path(id: product.id), method: :post do
+                        = icon('fa-regular', 'heart')
+                .p-4
+                  %h2.text-sm.font-semibold.text-gray-800.my-3
+                    = link_to product.name, product_path(product), class: "cursor-pointer"
+                  %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
+                  .flex.items-center
+                    %span.text-lg.font-bold.text-sky-500.mr-3
+                      = number_to_currency product.price, unit: "PHP"
+                  .star-rating{style: "--rating: #{product.average_rating}; --total-stars: 5;"}
+                    .stars-outer
+                      .stars-inner
+        %div{"class": "hidden duration-1000 ease-in-out", "data-carousel-item": ""}
+          .grid.grid-cols-4.gap-4
+            - @recent_products.drop(4).first(4).each do |product|
+              .flex.flex-col
+                .bg-gray-100.rounded-lg.shadow
+                  .relative
+                    = image_tag(product.image_webp, class: "w-96 h-auto")
+                    .absolute.top-2.right-2
+                      = icon('fa-regular', 'eye')
+                    .absolute.top-8.right-2
+                      =button_to wishlist_account_path(id: product.id), method: :post do
+                        = icon('fa-regular', 'heart')
+                .p-4
+                  %h2.text-sm.font-semibold.text-gray-800.my-3
+                    = link_to product.name, product_path(product), class: "cursor-pointer"
+                  %p.text-sm.font-semibold.text-gray-600.mb-2 All accessories included
+                  .flex.items-center
+                    %span.text-lg.font-bold.text-sky-500.mr-3
+                      = number_to_currency product.price, unit: "PHP"
+                  .star-rating{style: "--rating: #{product.average_rating}; --total-stars: 5;"}
+                    .stars-outer
+                      .stars-inner
+  %div
+    %h2.text-2xl.font-bold.my-4 Best Sellers
+  %div
+    %h2.text-2xl.font-bold.my-4 On Sale

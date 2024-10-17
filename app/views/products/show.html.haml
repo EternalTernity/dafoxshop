@@ -1,5 +1,5 @@
 =breadcrumb(@product)
-.container.mx-auto.p-4 
+.container.mx-auto.p-4
   .flex.flex-col.md:flex-row.gap-8
     %div{class:"md:w-1/2"}
       .flex.gap-4
@@ -36,11 +36,11 @@
           =label_tag "Quantity"
           =number_field_tag :quantity, 1, min: 1, class: "rounded-lg"
           =submit_tag "Add to cart", class: "btn-cta"
-        =button_to "Buy it", checkout_path(id: @product.id)
   .grid.md:grid-cols-2.gap-8.p-5
     %div
       %h2.text-2xl.font-bold.mb-4 Write a review
       .bg-white.p-6.rounded-lg.shadow.border
+        -# add star rating selection wherein emojis are represented by a corresponding star rating value
         =form_with(model: [@product, @product.reviews.build], local:true, class: "space-y-4") do |f|
           .relative
             =f.text_field :subject, placeholder: "Subject", class: "text-field"
@@ -48,6 +48,8 @@
               .absolute.bottom-0.left-0.w-full.h-full.border-b-2.border-primary.rounded-bl-md.rounded-br-md
           .flex.items-center
             =f.text_area :content, placeholder: "Content", class: "w-full min-h-[100px] border-transparent bg-secondary focus:ring-0"
+          -#   correct the syntax so that i can iterate *
+          =f.select :star_rating, options_for_select((1..5).to_a.reverse.map { |n| ["#{"⭐" * n}", n] }, params[:star]), class: "border-transparent"
           .max-w-40.mx-auto
             =f.submit "Submit", class: "btn-cta"
     %div

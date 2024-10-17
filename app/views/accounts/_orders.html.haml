@@ -1,0 +1,22 @@
+.container.mx-auto.p-4
+  .overflow-x-auto
+    .min-w-full
+      %table.w-full
+        %thead
+          %tr.border-b
+            %th.text-left.py-2 Product
+            %th.text-center.py-2 Dates
+            %th.text-center.py-2 Status
+            %th.text-right.py-2 Price
+        %tbody
+          -orders.each do |oi|
+            -oi.order_items.each do |ooi|
+              %tr.border-b
+                %td.py-4
+                  =ooi.product.name
+                %td.py-4.text-center
+                  =oi.created_at.to_date
+                %td.py-4.text-center
+                  %span Not yet implmntd
+                %td.py-4.text-right{class: "text-[#01C5FF]"}
+                  =number_to_currency(ooi.product.price, unit: "PHP ")

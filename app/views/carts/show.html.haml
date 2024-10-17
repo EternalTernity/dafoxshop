@@ -43,5 +43,6 @@
         =link_to "Checkout", new_order_path, class:"btn-cta"
         
 -else
-    %h1.font-extrabold.text-7xl.text-center Your cart is empty   
-    =link_to "Continue shopping", root_path, class:"btn-cta"   
+    %h1.font-extrabold.text-7xl.text-center Your cart is empty
+    .flex.items-center.justify-center.py-5
+        =link_to "Continue shopping", root_path, class:"btn-cta"

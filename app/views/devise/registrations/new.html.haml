@@ -29,7 +29,6 @@
           .flex.flex-col
             =f.label :avatar
             =f.file_field :avatar
-          .max-w-40.mx-auto
-            = f.submit "Create", class: "btn-cta"
+          = f.submit "Create", class: "btn-cta w-full"
           .text-center.text-sm
             =render "devise/shared/links"
